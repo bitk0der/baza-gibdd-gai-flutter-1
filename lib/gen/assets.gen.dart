@@ -61,9 +61,18 @@ class $AssetsImagesGen {
   AssetGenImage get mainImage =>
       const AssetGenImage('assets/images/main_image.png');
 
+  /// File path: assets/images/mockConsultantAvatar.png
+  AssetGenImage get mockConsultantAvatar =>
+      const AssetGenImage('assets/images/mockConsultantAvatar.png');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [aiHelper, backgroundImage, editProfileImage, mainImage];
+  List<AssetGenImage> get values => [
+        aiHelper,
+        backgroundImage,
+        editProfileImage,
+        mainImage,
+        mockConsultantAvatar
+      ];
 }
 
 class $AssetsTranslationsGen {
