@@ -1,4 +1,5 @@
 import 'package:baza_gibdd_gai/core/di/service_locator.dart';
+import 'package:baza_gibdd_gai/core/routes/app_router.dart';
 import 'package:baza_gibdd_gai/core/theme/theme.dart';
 import 'package:baza_gibdd_gai/core/utils/random_string_generator.dart';
 import 'package:baza_gibdd_gai/features/app_banner/app_banner_initial_setup.dart';
