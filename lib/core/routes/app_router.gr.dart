@@ -112,6 +112,22 @@ class AppWebViewPageArgs {
 }
 
 /// generated route for
+/// [ChatRouterPage]
+class ChatRouter extends PageRouteInfo<void> {
+  const ChatRouter({List<PageRouteInfo>? children})
+      : super(ChatRouter.name, initialChildren: children);
+
+  static const String name = 'ChatRouter';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ChatRouterPage();
+    },
+  );
+}
+
+/// generated route for
 /// [FavouritesPage]
 class FavouritesRoute extends PageRouteInfo<void> {
   const FavouritesRoute({List<PageRouteInfo>? children})
@@ -123,6 +139,102 @@ class FavouritesRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const FavouritesPage();
+    },
+  );
+}
+
+/// generated route for
+/// [FinePaymentScreen]
+class FinePaymentRoute extends PageRouteInfo<void> {
+  const FinePaymentRoute({List<PageRouteInfo>? children})
+      : super(FinePaymentRoute.name, initialChildren: children);
+
+  static const String name = 'FinePaymentRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FinePaymentScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [FineSearchScreen]
+class FineSearchRoute extends PageRouteInfo<FineSearchRouteArgs> {
+  FineSearchRoute({
+    Key? key,
+    required UserData userData,
+    bool isFromPush = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FineSearchRoute.name,
+          args: FineSearchRouteArgs(
+            key: key,
+            userData: userData,
+            isFromPush: isFromPush,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FineSearchRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<FineSearchRouteArgs>();
+      return FineSearchScreen(
+        key: args.key,
+        userData: args.userData,
+        isFromPush: args.isFromPush,
+      );
+    },
+  );
+}
+
+class FineSearchRouteArgs {
+  const FineSearchRouteArgs({
+    this.key,
+    required this.userData,
+    this.isFromPush = false,
+  });
+
+  final Key? key;
+
+  final UserData userData;
+
+  final bool isFromPush;
+
+  @override
+  String toString() {
+    return 'FineSearchRouteArgs{key: $key, userData: $userData, isFromPush: $isFromPush}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! FineSearchRouteArgs) return false;
+    return key == other.key &&
+        userData == other.userData &&
+        isFromPush == other.isFromPush;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ userData.hashCode ^ isFromPush.hashCode;
+}
+
+/// generated route for
+/// [FinesRouterPage]
+class FinesRouter extends PageRouteInfo<void> {
+  const FinesRouter({List<PageRouteInfo>? children})
+      : super(FinesRouter.name, initialChildren: children);
+
+  static const String name = 'FinesRouter';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FinesRouterPage();
     },
   );
 }
@@ -171,6 +283,22 @@ class HomeRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const HomeScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [MyReportsRouterPage]
+class MyReportsRouter extends PageRouteInfo<void> {
+  const MyReportsRouter({List<PageRouteInfo>? children})
+      : super(MyReportsRouter.name, initialChildren: children);
+
+  static const String name = 'MyReportsRouter';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MyReportsRouterPage();
     },
   );
 }
@@ -227,4 +355,36 @@ class NotificationDetailsRouteArgs {
 
   @override
   int get hashCode => key.hashCode ^ messageResponse.hashCode;
+}
+
+/// generated route for
+/// [PaymentHistoryScreen]
+class PaymentHistoryRoute extends PageRouteInfo<void> {
+  const PaymentHistoryRoute({List<PageRouteInfo>? children})
+      : super(PaymentHistoryRoute.name, initialChildren: children);
+
+  static const String name = 'PaymentHistoryRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PaymentHistoryScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [PaymentsScreen]
+class PaymentsRoute extends PageRouteInfo<void> {
+  const PaymentsRoute({List<PageRouteInfo>? children})
+      : super(PaymentsRoute.name, initialChildren: children);
+
+  static const String name = 'PaymentsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PaymentsScreen();
+    },
+  );
 }

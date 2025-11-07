@@ -4,6 +4,12 @@ import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/pages/favouri
 import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/pages/home_chat_screen.dart';
 import 'package:baza_gibdd_gai/features/local_notifications/data/models/response_message_model.dart';
 import 'package:baza_gibdd_gai/features/local_notifications/presentation/pages/notification_details_page.dart';
+import 'package:baza_gibdd_gai/features/payments/data/models/user_data.dart';
+import 'package:baza_gibdd_gai/features/payments/presentation/pages/fine/fine_payment_screen.dart';
+import 'package:baza_gibdd_gai/features/payments/presentation/pages/fine/fine_search_screen.dart';
+import 'package:baza_gibdd_gai/features/payments/presentation/pages/payment_history_screen/payment_history_screen.dart'
+    show PaymentHistoryScreen;
+import 'package:baza_gibdd_gai/features/payments/presentation/pages/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:baza_gibdd_gai/core/app_root_screen.dart';
 import 'package:baza_gibdd_gai/features/home/presentation/pages/home_screen.dart';
@@ -27,6 +33,21 @@ class AppRouter extends RootStackRouter {
             path: 'home',
             children: [AutoRoute(page: HomeRoute.page, path: '')],
           ),
+          AutoRoute(
+            page: FinesRouter.page,
+            path: 'fines',
+            children: [AutoRoute(page: PaymentsRoute.page, path: '')],
+          ),
+          AutoRoute(
+            page: ChatRouter.page,
+            path: 'chat',
+            children: [AutoRoute(page: HomeChatRoute.page, path: '')],
+          ),
+          AutoRoute(
+            page: MyReportsRouter.page,
+            path: 'my_reports',
+            children: [AutoRoute(page: HomeRoute.page, path: '')],
+          ),
         ],
       ),
     ];
@@ -36,4 +57,19 @@ class AppRouter extends RootStackRouter {
 @RoutePage(name: 'HomeRouter')
 class HomeRouterPage extends AutoRouter {
   const HomeRouterPage({super.key});
+}
+
+@RoutePage(name: 'FinesRouter')
+class FinesRouterPage extends AutoRouter {
+  const FinesRouterPage({super.key});
+}
+
+@RoutePage(name: 'ChatRouter')
+class ChatRouterPage extends AutoRouter {
+  const ChatRouterPage({super.key});
+}
+
+@RoutePage(name: 'MyReportsRouter')
+class MyReportsRouterPage extends AutoRouter {
+  const MyReportsRouterPage({super.key});
 }

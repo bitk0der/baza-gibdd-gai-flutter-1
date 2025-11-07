@@ -1,10 +1,13 @@
+import 'package:baza_gibdd_gai/core/constants/constants.dart';
 import 'package:baza_gibdd_gai/core/di/service_locator.dart';
 import 'package:baza_gibdd_gai/core/routes/app_router.dart';
 import 'package:baza_gibdd_gai/core/theme/theme.dart';
 import 'package:baza_gibdd_gai/core/utils/random_string_generator.dart';
 import 'package:baza_gibdd_gai/features/app_banner/app_banner_initial_setup.dart';
 import 'package:baza_gibdd_gai/features/local_notifications/main_notification_logic.dart';
+import 'package:baza_gibdd_gai/gen/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:appmetrica_plugin/appmetrica_plugin.dart';
@@ -40,12 +43,7 @@ void main() async {
     globalUserId = userId ?? generateRandomString();
 
     runApp(
-      EasyLocalization(
-        supportedLocales: const [Locale('ru', 'RU'), Locale('en', 'US')],
-        path: 'assets/translations',
-        fallbackLocale: const Locale('en', 'US'),
-        child: const App(),
-      ),
+      const App(),
     );
   });
 }
@@ -65,12 +63,16 @@ class _AppState extends State<App> {
       child: ScreenUtilInit(
         designSize: const Size(414, 896),
         child: MaterialApp.router(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          routerConfig: _appRouter.config(),
-          theme: defaultTheme,
-        ),
+            locale: const Locale(languageCode),
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              S.delegate
+            ],
+            routerConfig: _appRouter.config(),
+            supportedLocales: const AppLocalizationDelegate().supportedLocales,
+            theme: defaultTheme),
       ),
     );
   }

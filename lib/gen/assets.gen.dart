@@ -37,9 +37,45 @@ class $AssetsFontsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/active_circle.svg
+  SvgGenImage get activeCircle =>
+      const SvgGenImage('assets/icons/active_circle.svg');
+
+  /// File path: assets/icons/car_icon.svg
+  SvgGenImage get carIcon => const SvgGenImage('assets/icons/car_icon.svg');
+
+  /// File path: assets/icons/close_icon.svg
+  SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close_icon.svg');
+
+  /// File path: assets/icons/hexagon.svg
+  SvgGenImage get hexagon => const SvgGenImage('assets/icons/hexagon.svg');
+
+  /// File path: assets/icons/message_icon.svg
+  SvgGenImage get messageIcon =>
+      const SvgGenImage('assets/icons/message_icon.svg');
+
   /// Directory path: assets/icons/nav_bar_icons
   $AssetsIconsNavBarIconsGen get navBarIcons =>
       const $AssetsIconsNavBarIconsGen();
+
+  /// File path: assets/icons/person_icon.svg
+  SvgGenImage get personIcon =>
+      const SvgGenImage('assets/icons/person_icon.svg');
+
+  /// File path: assets/icons/unactive_circle.svg
+  SvgGenImage get unactiveCircle =>
+      const SvgGenImage('assets/icons/unactive_circle.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [
+        activeCircle,
+        carIcon,
+        closeIcon,
+        hexagon,
+        messageIcon,
+        personIcon,
+        unactiveCircle
+      ];
 }
 
 class $AssetsImagesGen {
@@ -57,6 +93,13 @@ class $AssetsImagesGen {
   AssetGenImage get editProfileImage =>
       const AssetGenImage('assets/images/edit_profile_image.png');
 
+  /// File path: assets/images/empty_loans.png
+  AssetGenImage get emptyLoans =>
+      const AssetGenImage('assets/images/empty_loans.png');
+
+  /// Directory path: assets/images/hints
+  $AssetsImagesHintsGen get hints => const $AssetsImagesHintsGen();
+
   /// File path: assets/images/main_image.png
   AssetGenImage get mainImage =>
       const AssetGenImage('assets/images/main_image.png');
@@ -70,6 +113,7 @@ class $AssetsImagesGen {
         aiHelper,
         backgroundImage,
         editProfileImage,
+        emptyLoans,
         mainImage,
         mockConsultantAvatar
       ];
@@ -110,6 +154,54 @@ class $AssetsIconsNavBarIconsGen {
   /// List of all assets
   List<SvgGenImage> get values =>
       [chatNavBarIcon, finesNavBarIcon, homeNavBarIcon, reportsNavBarIcon];
+}
+
+class $AssetsImagesHintsGen {
+  const $AssetsImagesHintsGen();
+
+  /// File path: assets/images/hints/els_hint.png
+  AssetGenImage get elsHint =>
+      const AssetGenImage('assets/images/hints/els_hint.png');
+
+  /// File path: assets/images/hints/inn_hint.png
+  AssetGenImage get innHint =>
+      const AssetGenImage('assets/images/hints/inn_hint.png');
+
+  /// File path: assets/images/hints/ipd_hint.png
+  AssetGenImage get ipdHint =>
+      const AssetGenImage('assets/images/hints/ipd_hint.png');
+
+  /// File path: assets/images/hints/passport_hint.png
+  AssetGenImage get passportHint =>
+      const AssetGenImage('assets/images/hints/passport_hint.png');
+
+  /// File path: assets/images/hints/snils_hint.png
+  AssetGenImage get snilsHint =>
+      const AssetGenImage('assets/images/hints/snils_hint.png');
+
+  /// File path: assets/images/hints/sts_hint.png
+  AssetGenImage get stsHint =>
+      const AssetGenImage('assets/images/hints/sts_hint.png');
+
+  /// File path: assets/images/hints/uin_hint.png
+  AssetGenImage get uinHint =>
+      const AssetGenImage('assets/images/hints/uin_hint.png');
+
+  /// File path: assets/images/hints/vu_hint.png
+  AssetGenImage get vuHint =>
+      const AssetGenImage('assets/images/hints/vu_hint.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [
+        elsHint,
+        innHint,
+        ipdHint,
+        passportHint,
+        snilsHint,
+        stsHint,
+        uinHint,
+        vuHint
+      ];
 }
 
 class Assets {
