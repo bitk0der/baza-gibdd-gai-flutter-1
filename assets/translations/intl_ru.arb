@@ -1,7 +1,9 @@
 {
   "@@locale": "ru",
-  "app_title": "Моё приложение",
-  "hello_world": "Привет, мир!",
+  "navbar_home": "Проверка",
+  "navbar_fines": "Штрафы",
+  "navbar_chat": "Помощник",
+  "navbar_reports": "Мои отчеты",
   "@hello_world": {
     "description": "Приветствие, отображаемое пользователю."
   }

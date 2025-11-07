@@ -18,8 +18,10 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(
+      _current != null,
+      'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.',
+    );
     return _current!;
   }
 
@@ -41,8 +43,10 @@ class S {
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -50,22 +54,27 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `My Application`
-  String get app_title {
-    return Intl.message(
-      'My Application',
-      name: 'app_title',
-      desc: '',
-      args: [],
-    );
+  /// `Check`
+  String get navbar_home {
+    return Intl.message('Check', name: 'navbar_home', desc: '', args: []);
   }
 
-  /// `Hello, World!`
-  String get hello_world {
+  /// `Fines`
+  String get navbar_fines {
+    return Intl.message('Fines', name: 'navbar_fines', desc: '', args: []);
+  }
+
+  /// `Helper`
+  String get navbar_chat {
+    return Intl.message('Helper', name: 'navbar_chat', desc: '', args: []);
+  }
+
+  /// `My Reports`
+  String get navbar_reports {
     return Intl.message(
-      'Hello, World!',
-      name: 'hello_world',
-      desc: 'Greeting displayed to the user.',
+      'My Reports',
+      name: 'navbar_reports',
+      desc: '',
       args: [],
     );
   }

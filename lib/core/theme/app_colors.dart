@@ -5,7 +5,7 @@ class ColorStyles {
   static const Color fillColor = Color(0xffEFEFEF);
   static const Color black = Colors.black;
   static const Color secondaryBlue = Color(0xff2B293D);
-  static const Color primaryBlue = Color(0xff151228);
+  static const Color primaryBlue = Color(0xff131F2C);
   static const Color cardBlue = Color(0xff4B495C);
   static const Color orange = Color(0xffFFA800);
   static const Color lightOrange = Color(0xffFFD600);
@@ -20,5 +20,10 @@ class ColorStyles {
   static const List<Color> bannerMockGradient = [
     Color(0xffA8FF78),
     Color(0xff78FFD6),
+  ];
+
+  static const List<Color> mainGradient = [
+    Color(0xff6121FB),
+    Color(0xffA76CF9),
   ];
 }

@@ -1,7 +1,9 @@
 {
   "@@locale": "en",
-  "app_title": "My Application",
-  "hello_world": "Hello, World!",
+  "navbar_home": "Check",
+  "navbar_fines": "Fines",
+  "navbar_chat": "Helper",
+  "navbar_reports": "My Reports",
   "@hello_world": {
     "description": "Greeting displayed to the user."
   }

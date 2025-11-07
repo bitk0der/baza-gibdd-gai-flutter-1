@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:baza_gibdd_gai/core/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:baza_gibdd_gai/core/extensions/l10n_extension.dart';
@@ -6,6 +7,7 @@ import 'package:baza_gibdd_gai/core/routes/app_router.dart';
 import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/theme/app_fonts.dart';
 import 'package:baza_gibdd_gai/gen/assets.gen.dart';
+import 'package:flutter_svg/svg.dart';
 
 @RoutePage()
 class AppRootScreen extends StatefulWidget {
@@ -16,86 +18,129 @@ class AppRootScreen extends StatefulWidget {
 }
 
 class _AppRootScreenState extends State<AppRootScreen> {
-  final routes = [const HomeRoute(), const HomeRoute()];
+  final routes = [
+    const HomeRoute(),
+    const HomeRoute(),
+    const HomeRoute(),
+    const HomeRoute()
+  ];
   final _icons = [
     Assets.icons.navBarIcons.homeNavBarIcon,
-    Assets.icons.navBarIcons.profileNavBarIcon,
+    Assets.icons.navBarIcons.finesNavBarIcon,
+    Assets.icons.navBarIcons.chatNavBarIcon,
+    Assets.icons.navBarIcons.reportsNavBarIcon,
   ];
-  late final _labels = [context.l10n.app_title, context.l10n.app_title];
+  late final _labels = [
+    context.l10n.navbar_home,
+    context.l10n.navbar_fines,
+    context.l10n.navbar_chat,
+    context.l10n.navbar_reports
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      backgroundColor: ColorStyles.white,
-      routes: routes,
-      bottomNavigationBuilder: (context, tabsRouter) {
-        if (tabsRouter.topMatch.meta['hideBottomNav'] == true) {
-          return const SizedBox.shrink();
-        }
-        return Container(
-          decoration: const BoxDecoration(
-            border: Border(top: BorderSide(color: ColorStyles.white)),
-          ),
-          child: WillPopScope(
-            onWillPop: () async {
-              if (tabsRouter.activeIndex == 0) {
-                return true;
-              } else {
-                ScaffoldMessenger.of(context).clearSnackBars();
-                tabsRouter.setActiveIndex(tabsRouter.activeIndex - 1);
-                tabsRouter.navigate(routes[tabsRouter.activeIndex - 1]);
-              }
-              return false;
-            },
-            child: BottomNavigationBar(
-              backgroundColor: ColorStyles.black.withOpacity(0.2),
-              currentIndex: tabsRouter.activeIndex,
-              elevation: 0,
-              iconSize: 25,
-              type: BottomNavigationBarType.fixed,
-              onTap: (index) async {
-                ScaffoldMessenger.of(context).clearSnackBars();
-                tabsRouter.setActiveIndex(index);
-                tabsRouter.navigate(routes[index]);
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(Assets.images.backgroundImage.path),
+              fit: BoxFit.cover)),
+      child: AutoTabsScaffold(
+        backgroundColor: Colors.transparent,
+        routes: routes,
+        extendBody: true,
+        bottomNavigationBuilder: (context, tabsRouter) {
+          if (tabsRouter.topMatch.meta['hideBottomNav'] == true) {
+            return const SizedBox.shrink();
+          }
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: ColorStyles.primaryBlue,
+              boxShadow: const [
+                BoxShadow(blurRadius: 16, color: Colors.black12)
+              ],
+            ),
+            margin: EdgeInsets.all(
+              16.w,
+            ).copyWith(bottom: 16 + MediaQuery.of(context).viewPadding.bottom),
+            child: PopScope(
+              canPop: tabsRouter.activeIndex == 0,
+              onPopInvokedWithResult: (canPop, result) async {
+                if (!canPop) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  tabsRouter.setActiveIndex(tabsRouter.activeIndex - 1);
+                  tabsRouter.navigate(routes[tabsRouter.activeIndex]);
+                }
               },
-              useLegacyColorScheme: false,
-              selectedLabelStyle: TextStyles.h2.copyWith(fontSize: 0),
-              unselectedLabelStyle: TextStyles.h2.copyWith(fontSize: 0),
-              items: List.generate(
-                _labels.length,
-                (index) => BottomNavigationBarItem(
-                  label: '',
-                  icon: _getIcon(
-                    _icons[index],
-                    _labels[index],
-                    tabsRouter.activeIndex == index,
+              child: MediaQuery.removePadding(
+                context: context,
+                removeBottom: true,
+                child: BottomNavigationBar(
+                  backgroundColor: Colors.transparent,
+                  currentIndex: tabsRouter.activeIndex,
+                  elevation: 0,
+                  type: BottomNavigationBarType.fixed,
+                  onTap: (index) async {
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    tabsRouter.setActiveIndex(index);
+                    tabsRouter.navigate(routes[index]);
+                  },
+                  useLegacyColorScheme: false,
+                  selectedLabelStyle: TextStyles.h2.copyWith(fontSize: 0),
+                  unselectedLabelStyle: TextStyles.h2.copyWith(fontSize: 0),
+                  items: List.generate(
+                    _labels.length,
+                    (index) => BottomNavigationBarItem(
+                      label: '',
+                      icon: _getIcon(
+                        _icons[index],
+                        _labels[index],
+                        tabsRouter.activeIndex == index,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
   Widget _getIcon(SvgGenImage icon, String text, bool isActive) {
     return Padding(
-      padding: EdgeInsets.only(top: 8.h, bottom: 21.h),
+      padding: EdgeInsets.symmetric(vertical: 13.h),
       child: Column(
         children: [
-          icon.svg(
-            width: 24.w,
-            height: 24.h,
-            colorFilter: ColorFilter.mode(
-              isActive ? ColorStyles.black : ColorStyles.white,
-              BlendMode.srcIn,
+          AnimatedCrossFade(
+            firstChild: getIcon(icon),
+            secondChild: getIcon(
+              icon,
+              ColorStyles.white.withValues(alpha: 0.5),
             ),
+            crossFadeState:
+                isActive ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+            duration: standartDuration,
           ),
           SizedBox(height: 5.h),
-          Text(text, style: TextStyles.h2),
+          AnimatedDefaultTextStyle(
+            style: TextStyles.h5.copyWith(
+              color:
+                  isActive ? Colors.white : Colors.white.withValues(alpha: 0.4),
+            ),
+            duration: standartDuration,
+            child: Text(text),
+          ),
         ],
       ),
     );
   }
+
+  SvgPicture getIcon(SvgGenImage icon, [Color? color]) => icon.svg(
+        width: 24.w,
+        height: 24.h,
+        colorFilter:
+            color == null ? null : ColorFilter.mode(color, BlendMode.srcIn),
+      );
 }
