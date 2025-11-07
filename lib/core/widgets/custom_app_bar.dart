@@ -33,7 +33,7 @@ class CustomAppBar {
                 children: [
                   AppCircleButton(
                     onTap: () => context.maybePop(),
-                    icon: Assets.icons.navBarIcons.chatNavBarIcon,
+                    icon: Assets.icons.arrowRight,
                     buttonSize: 40,
                     backgroundColor: Colors.white,
                   ),
@@ -73,18 +73,19 @@ class CustomAppBar {
     List<Widget>? actions,
     bool isBackButton = true,
     VoidCallback? onTapBackButton,
-    bool isNeedImage = false,
+    bool isNeedImage = true,
     double borderRadius = 16,
+    bool isTitleCenter = false,
     required String title,
   }) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(kToolbarHeight + 20.h),
+      preferredSize: Size.fromHeight(kToolbarHeight + 15.h),
       child: Container(
         decoration: BoxDecoration(
           image: !isNeedImage
               ? null
               : DecorationImage(
-                  image: AssetImage(Assets.images.backgroundImage.path),
+                  image: AssetImage(Assets.images.mockConsultantAvatar.path),
                   fit: BoxFit.cover,
                 ),
           borderRadius: BorderRadiusGeometry.vertical(
@@ -102,24 +103,29 @@ class CustomAppBar {
           bottom: PreferredSize(
             preferredSize: Size.zero,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
                     child: Row(
+                      mainAxisAlignment: isBackButton && !isTitleCenter
+                          ? MainAxisAlignment.start
+                          : !isBackButton && isTitleCenter
+                              ? MainAxisAlignment.center
+                              : MainAxisAlignment.spaceBetween,
                       children: [
                         if (isBackButton) ...[
                           AppCircleButton(
-                            buttonSize: 44,
+                            buttonSize: 30,
                             onTap: onTapBackButton,
-                            padding: 12,
-                            radius: 12,
-                            icon: Assets.icons.navBarIcons.chatNavBarIcon,
-                            backgroundColor: Colors.white24,
-                            iconColor: Colors.white,
+                            padding: 7,
+                            radius: 8,
+                            icon: Assets.icons.arrowRight,
+                            backgroundColor: Colors.white,
+                            iconColor: Colors.black,
                           ),
-                          SizedBox(width: 16.w),
+                          if (!isTitleCenter) SizedBox(width: 16.w),
                         ],
                         Flexible(
                           child: Text(
@@ -127,12 +133,14 @@ class CustomAppBar {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyles.h1.copyWith(
-                              fontSize: 18.sp,
+                              fontSize: 20.sp,
                               color: Colors.white,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
+                        if (isBackButton && isTitleCenter)
+                          SizedBox(width: 30.w),
                       ],
                     ),
                   ),
@@ -177,7 +185,7 @@ class CustomAppBar {
                     if (isBackButton) ...[
                       AppCircleButton(
                         onTap: onTapBackButton,
-                        icon: Assets.icons.navBarIcons.chatNavBarIcon,
+                        icon: Assets.icons.arrowRight,
                         backgroundColor: Colors.white24,
                         iconColor: Colors.white,
                       ),
@@ -251,7 +259,7 @@ class CustomAppBar {
           color: ColorStyles.white,
           image: DecorationImage(
             image: AssetImage(
-              imagePath ?? Assets.images.backgroundImage.path,
+              imagePath ?? Assets.images.mockConsultantAvatar.path,
             ),
             fit: BoxFit.cover,
           ),
@@ -266,7 +274,7 @@ class CustomAppBar {
               children: [
                 AppCircleButton(
                   quarterTurns: 2,
-                  icon: Assets.icons.navBarIcons.chatNavBarIcon,
+                  icon: Assets.icons.arrowRight,
                   onTap: () => context.maybePop(),
                   backgroundColor: Colors.white24,
                   iconColor: Colors.white,

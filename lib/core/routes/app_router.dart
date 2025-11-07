@@ -2,6 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:baza_gibdd_gai/features/app_banner/presentation/app_web_view.dart';
 import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/pages/favourites_page.dart';
 import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/pages/home_chat_screen.dart';
+import 'package:baza_gibdd_gai/features/credit_rating/data/models/payment_response.dart';
+import 'package:baza_gibdd_gai/features/credit_rating/data/models/product_model.dart';
+import 'package:baza_gibdd_gai/features/credit_rating/presentation/pages/checkout_page.dart';
+import 'package:baza_gibdd_gai/features/credit_rating/presentation/pages/credit_rating_main_page.dart';
+import 'package:baza_gibdd_gai/features/credit_rating/presentation/pages/credit_rating_main_page_old.dart';
+import 'package:baza_gibdd_gai/features/credit_rating/presentation/pages/fill_data_page.dart';
+import 'package:baza_gibdd_gai/features/credit_rating/presentation/pages/payment_webview.dart';
 import 'package:baza_gibdd_gai/features/local_notifications/data/models/response_message_model.dart';
 import 'package:baza_gibdd_gai/features/local_notifications/presentation/pages/notification_details_page.dart';
 import 'package:baza_gibdd_gai/features/payments/data/models/user_data.dart';
@@ -10,6 +17,7 @@ import 'package:baza_gibdd_gai/features/payments/presentation/pages/fine/fine_se
 import 'package:baza_gibdd_gai/features/payments/presentation/pages/payment_history_screen/payment_history_screen.dart'
     show PaymentHistoryScreen;
 import 'package:baza_gibdd_gai/features/payments/presentation/pages/payment_screen.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:baza_gibdd_gai/core/app_root_screen.dart';
 import 'package:baza_gibdd_gai/features/home/presentation/pages/home_screen.dart';
@@ -41,12 +49,28 @@ class AppRouter extends RootStackRouter {
           AutoRoute(
             page: ChatRouter.page,
             path: 'chat',
-            children: [AutoRoute(page: HomeChatRoute.page, path: '')],
+            children: [
+              AutoRoute(page: HomeChatRoute.page, path: ''),
+              AutoRoute(page: AppWebViewPage.page, path: 'app_webview'),
+            ],
           ),
           AutoRoute(
             page: MyReportsRouter.page,
             path: 'my_reports',
-            children: [AutoRoute(page: HomeRoute.page, path: '')],
+            children: [
+              AutoRoute(page: CreditRatingMainRoute.page, path: ''),
+              AutoRoute(
+                page: CreditRatingMainOldRoute.page,
+                path: 'credit_rating_main_page_old',
+              ),
+              AutoRoute(page: CheckoutRoute.page, path: 'checkout_route'),
+              AutoRoute(page: FillDataRoute.page, path: 'fill_data_route'),
+              AutoRoute(
+                page: PaymentWebviewRoute.page,
+                path: 'payment_app_webview',
+              ),
+              AutoRoute(page: AppWebViewPage.page, path: 'app_webview'),
+            ],
           ),
         ],
       ),

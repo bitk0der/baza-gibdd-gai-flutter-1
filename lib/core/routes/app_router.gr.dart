@@ -35,6 +35,7 @@ class AppWebViewPage extends PageRouteInfo<AppWebViewPageArgs> {
     String title = '',
     bool isNeedBackButton = true,
     PreferredSizeWidget? appBar,
+    VoidCallback? onFinished,
     List<PageRouteInfo>? children,
   }) : super(
           AppWebViewPage.name,
@@ -44,6 +45,7 @@ class AppWebViewPage extends PageRouteInfo<AppWebViewPageArgs> {
             title: title,
             isNeedBackButton: isNeedBackButton,
             appBar: appBar,
+            onFinished: onFinished,
           ),
           initialChildren: children,
         );
@@ -62,6 +64,7 @@ class AppWebViewPage extends PageRouteInfo<AppWebViewPageArgs> {
         title: args.title,
         isNeedBackButton: args.isNeedBackButton,
         appBar: args.appBar,
+        onFinished: args.onFinished,
       );
     },
   );
@@ -74,6 +77,7 @@ class AppWebViewPageArgs {
     this.title = '',
     this.isNeedBackButton = true,
     this.appBar,
+    this.onFinished,
   });
 
   final Key? key;
@@ -86,9 +90,11 @@ class AppWebViewPageArgs {
 
   final PreferredSizeWidget? appBar;
 
+  final VoidCallback? onFinished;
+
   @override
   String toString() {
-    return 'AppWebViewPageArgs{key: $key, url: $url, title: $title, isNeedBackButton: $isNeedBackButton, appBar: $appBar}';
+    return 'AppWebViewPageArgs{key: $key, url: $url, title: $title, isNeedBackButton: $isNeedBackButton, appBar: $appBar, onFinished: $onFinished}';
   }
 
   @override
@@ -99,7 +105,8 @@ class AppWebViewPageArgs {
         url == other.url &&
         title == other.title &&
         isNeedBackButton == other.isNeedBackButton &&
-        appBar == other.appBar;
+        appBar == other.appBar &&
+        onFinished == other.onFinished;
   }
 
   @override
@@ -108,7 +115,8 @@ class AppWebViewPageArgs {
       url.hashCode ^
       title.hashCode ^
       isNeedBackButton.hashCode ^
-      appBar.hashCode;
+      appBar.hashCode ^
+      onFinished.hashCode;
 }
 
 /// generated route for
@@ -128,6 +136,108 @@ class ChatRouter extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CheckoutPage]
+class CheckoutRoute extends PageRouteInfo<CheckoutRouteArgs> {
+  CheckoutRoute({
+    Key? key,
+    required List<String> serviceParams,
+    required AvailableProduct availableProduct,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CheckoutRoute.name,
+          args: CheckoutRouteArgs(
+            key: key,
+            serviceParams: serviceParams,
+            availableProduct: availableProduct,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CheckoutRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CheckoutRouteArgs>();
+      return CheckoutPage(
+        key: args.key,
+        serviceParams: args.serviceParams,
+        availableProduct: args.availableProduct,
+      );
+    },
+  );
+}
+
+class CheckoutRouteArgs {
+  const CheckoutRouteArgs({
+    this.key,
+    required this.serviceParams,
+    required this.availableProduct,
+  });
+
+  final Key? key;
+
+  final List<String> serviceParams;
+
+  final AvailableProduct availableProduct;
+
+  @override
+  String toString() {
+    return 'CheckoutRouteArgs{key: $key, serviceParams: $serviceParams, availableProduct: $availableProduct}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CheckoutRouteArgs) return false;
+    return key == other.key &&
+        const ListEquality<String>().equals(
+          serviceParams,
+          other.serviceParams,
+        ) &&
+        availableProduct == other.availableProduct;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^
+      const ListEquality<String>().hash(serviceParams) ^
+      availableProduct.hashCode;
+}
+
+/// generated route for
+/// [CreditRatingMainOldPage]
+class CreditRatingMainOldRoute extends PageRouteInfo<void> {
+  const CreditRatingMainOldRoute({List<PageRouteInfo>? children})
+      : super(CreditRatingMainOldRoute.name, initialChildren: children);
+
+  static const String name = 'CreditRatingMainOldRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CreditRatingMainOldPage();
+    },
+  );
+}
+
+/// generated route for
+/// [CreditRatingMainPage]
+class CreditRatingMainRoute extends PageRouteInfo<void> {
+  const CreditRatingMainRoute({List<PageRouteInfo>? children})
+      : super(CreditRatingMainRoute.name, initialChildren: children);
+
+  static const String name = 'CreditRatingMainRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CreditRatingMainPage();
+    },
+  );
+}
+
+/// generated route for
 /// [FavouritesPage]
 class FavouritesRoute extends PageRouteInfo<void> {
   const FavouritesRoute({List<PageRouteInfo>? children})
@@ -139,6 +249,22 @@ class FavouritesRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const FavouritesPage();
+    },
+  );
+}
+
+/// generated route for
+/// [FillDataPage]
+class FillDataRoute extends PageRouteInfo<void> {
+  const FillDataRoute({List<PageRouteInfo>? children})
+      : super(FillDataRoute.name, initialChildren: children);
+
+  static const String name = 'FillDataRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FillDataPage();
     },
   );
 }
@@ -371,6 +497,53 @@ class PaymentHistoryRoute extends PageRouteInfo<void> {
       return const PaymentHistoryScreen();
     },
   );
+}
+
+/// generated route for
+/// [PaymentWebviewPage]
+class PaymentWebviewRoute extends PageRouteInfo<PaymentWebviewRouteArgs> {
+  PaymentWebviewRoute({
+    Key? key,
+    required Cart cart,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PaymentWebviewRoute.name,
+          args: PaymentWebviewRouteArgs(key: key, cart: cart),
+          initialChildren: children,
+        );
+
+  static const String name = 'PaymentWebviewRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<PaymentWebviewRouteArgs>();
+      return PaymentWebviewPage(key: args.key, cart: args.cart);
+    },
+  );
+}
+
+class PaymentWebviewRouteArgs {
+  const PaymentWebviewRouteArgs({this.key, required this.cart});
+
+  final Key? key;
+
+  final Cart cart;
+
+  @override
+  String toString() {
+    return 'PaymentWebviewRouteArgs{key: $key, cart: $cart}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! PaymentWebviewRouteArgs) return false;
+    return key == other.key && cart == other.cart;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ cart.hashCode;
 }
 
 /// generated route for

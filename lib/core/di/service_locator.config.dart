@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -16,6 +16,10 @@ import 'package:baza_gibdd_gai/features/chat_with_gpt/data/repositories/api_repo
     as _i1015;
 import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/blocs/chat_cubit.dart'
     as _i359;
+import 'package:baza_gibdd_gai/features/credit_rating/data/repositories/api_repository.dart'
+    as _i365;
+import 'package:baza_gibdd_gai/features/credit_rating/presentation/blocs/credit_rating_cubit.dart'
+    as _i361;
 import 'package:baza_gibdd_gai/features/local_notifications/presentation/bloc/notification_bloc.dart'
     as _i1038;
 import 'package:baza_gibdd_gai/features/payments/data/repositories/api_util.dart'
@@ -78,6 +82,7 @@ extension GetItInjectableX on _i174.GetIt {
     final dioModule = _$DioModule();
     gh.factory<_i93.SpUtil>(() => _i93.SpUtil());
     gh.factory<_i1015.ApiRepository>(() => _i1015.ApiRepository());
+    gh.factory<_i365.ApiRepository>(() => _i365.ApiRepository());
     gh.factory<_i781.StorageUtil>(() => _i781.StorageUtil());
     gh.factory<_i303.RestService>(() => _i303.RestService());
     await gh.singletonAsync<_i460.SharedPreferences>(
@@ -101,6 +106,10 @@ extension GetItInjectableX on _i174.GetIt {
           preferences: gh<_i460.SharedPreferences>(),
         ));
     gh.singleton<_i559.ApiUtil>(() => _i559.ApiUtil(gh<_i303.RestService>()));
+    gh.singleton<_i361.CreditRatingCubit>(() => _i361.CreditRatingCubit(
+          gh<_i460.SharedPreferences>(),
+          repository: gh<_i365.ApiRepository>(),
+        ));
     gh.singleton<_i1038.LocalNotificationBloc>(
         () => _i1038.LocalNotificationBloc(
               gh<_i296.ApiClient>(),

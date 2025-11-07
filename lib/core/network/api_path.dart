@@ -33,4 +33,15 @@ class ApiPath {
 
   static String loadFsin() =>
       "$baseUrl/migrantreestr/plategi/fsinregionitems.json";
+
+  static const reportExampleUrl = 'https://rzta.ru/nspd/bkli/examplebki.pdf';
+
+  static const getCart = 'https://rzta.ru/nspd/bkli/bklireportsavailable.php';
+
+  static const getPaymentLink = 'https://rzta.ru/nspd/bkli/bklibuyreport.php';
+
+  static const checkPayment = 'https://rzta.ru/nspd/bkli/bklipaymentcheck.php';
+
+  static const getReceivingOrders =
+      'https://rzta.ru/nspd/bkli/bklireportsget.php';
 }

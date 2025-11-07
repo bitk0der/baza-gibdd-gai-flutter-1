@@ -15,11 +15,13 @@ class AppWebView extends StatefulWidget {
     this.title = '',
     this.isNeedBackButton = true,
     this.appBar,
+    this.onFinished,
   });
   final bool isNeedBackButton;
   final String url;
   final String title;
   final PreferredSizeWidget? appBar;
+  final VoidCallback? onFinished;
   @override
   State<AppWebView> createState() => _AppWebViewState();
 }
@@ -27,20 +29,22 @@ class AppWebView extends StatefulWidget {
 class _AppWebViewState extends State<AppWebView> {
   bool _isLoading = true;
   final _key = UniqueKey();
-  late WebViewController controller;
+  WebViewController? controller;
+
   @override
-  initState() {
+  void initState() {
+    super.initState();
+    _requestPermissionAndInit();
+  }
+
+  Future<void> _requestPermissionAndInit() async {
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
+          onProgress: (int progress) {},
           onPageStarted: (String url) {},
-          onPageFinished: (String url) => setState(() {
-            _isLoading = false;
-          }),
+          onPageFinished: (String url) => setState(() => _isLoading = false),
           onHttpError: (HttpResponseError error) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) async {
@@ -58,30 +62,49 @@ class _AppWebViewState extends State<AppWebView> {
         ),
       )
       ..loadRequest(Uri.parse(widget.url));
-    super.initState();
+
+    /*   if (controller!.platform is AndroidWebViewController) {
+      (controller!.platform as AndroidWebViewController)
+          .setGeolocationPermissionsPromptCallbacks(
+        onShowPrompt: (GeolocationPermissionsRequestParams request) async {
+          return const GeolocationPermissionsResponse(
+            allow: true,
+            retain: true,
+          );
+        },
+      );
+    }
+
+    setState(() {}); */
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: widget.appBar ??
-          CustomAppBar.getAppBar(
-            title: widget.title,
-            isNeedImage: true,
-            onTapBackButton: () => context.maybePop(),
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) =>
+          widget.onFinished != null ? widget.onFinished!() : null,
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: widget.appBar ??
+            CustomAppBar.getAppBar(
+              title: widget.title,
+              isNeedImage: true,
+              onTapBackButton: () => context.maybePop(),
+            ),
+        backgroundColor: ColorStyles.white,
+        body: SafeArea(
+          child: Stack(
+            children: [
+              if (controller != null)
+                WebViewWidget(key: _key, controller: controller!),
+              _isLoading ? loading() : const SizedBox(),
+            ],
           ),
-      backgroundColor: ColorStyles.white,
-      body: Stack(
-        children: [
-          WebViewWidget(key: _key, controller: controller),
-          _isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(color: ColorStyles.black),
-                )
-              : const SizedBox(),
-        ],
+        ),
       ),
     );
   }
+
+  Center loading() =>
+      const Center(child: CircularProgressIndicator(color: ColorStyles.black));
 }

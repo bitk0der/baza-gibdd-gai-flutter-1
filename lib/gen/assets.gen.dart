@@ -41,11 +41,25 @@ class $AssetsIconsGen {
   SvgGenImage get activeCircle =>
       const SvgGenImage('assets/icons/active_circle.svg');
 
+  /// File path: assets/icons/arrow_right.svg
+  SvgGenImage get arrowRight =>
+      const SvgGenImage('assets/icons/arrow_right.svg');
+
   /// File path: assets/icons/car_icon.svg
   SvgGenImage get carIcon => const SvgGenImage('assets/icons/car_icon.svg');
 
+  /// File path: assets/icons/clock.svg
+  SvgGenImage get clock => const SvgGenImage('assets/icons/clock.svg');
+
   /// File path: assets/icons/close_icon.svg
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close_icon.svg');
+
+  /// File path: assets/icons/documents.svg
+  SvgGenImage get documents => const SvgGenImage('assets/icons/documents.svg');
+
+  /// File path: assets/icons/green_verified.svg
+  SvgGenImage get greenVerified =>
+      const SvgGenImage('assets/icons/green_verified.svg');
 
   /// File path: assets/icons/hexagon.svg
   SvgGenImage get hexagon => const SvgGenImage('assets/icons/hexagon.svg');
@@ -62,19 +76,46 @@ class $AssetsIconsGen {
   SvgGenImage get personIcon =>
       const SvgGenImage('assets/icons/person_icon.svg');
 
+  /// File path: assets/icons/russian_symbol.svg
+  SvgGenImage get russianSymbol =>
+      const SvgGenImage('assets/icons/russian_symbol.svg');
+
+  /// File path: assets/icons/search.svg
+  SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
+
   /// File path: assets/icons/unactive_circle.svg
   SvgGenImage get unactiveCircle =>
       const SvgGenImage('assets/icons/unactive_circle.svg');
 
+  /// File path: assets/icons/verified_shield.svg
+  SvgGenImage get verifiedShield =>
+      const SvgGenImage('assets/icons/verified_shield.svg');
+
+  /// File path: assets/icons/verify_mark.svg
+  SvgGenImage get verifyMark =>
+      const SvgGenImage('assets/icons/verify_mark.svg');
+
+  /// File path: assets/icons/warning.svg
+  SvgGenImage get warning => const SvgGenImage('assets/icons/warning.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
         activeCircle,
+        arrowRight,
         carIcon,
+        clock,
         closeIcon,
+        documents,
+        greenVerified,
         hexagon,
         messageIcon,
         personIcon,
-        unactiveCircle
+        russianSymbol,
+        search,
+        unactiveCircle,
+        verifiedShield,
+        verifyMark,
+        warning
       ];
 }
 
@@ -88,6 +129,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/background_image.png
   AssetGenImage get backgroundImage =>
       const AssetGenImage('assets/images/background_image.png');
+
+  /// File path: assets/images/check_owner.png
+  AssetGenImage get checkOwner =>
+      const AssetGenImage('assets/images/check_owner.png');
 
   /// File path: assets/images/edit_profile_image.png
   AssetGenImage get editProfileImage =>
@@ -112,6 +157,7 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
         aiHelper,
         backgroundImage,
+        checkOwner,
         editProfileImage,
         emptyLoans,
         mainImage,
