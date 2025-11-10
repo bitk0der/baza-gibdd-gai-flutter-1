@@ -22,7 +22,9 @@ class CustomTextField extends StatelessWidget {
   final Color? fillColor;
   final Color? enabledColor;
   final String? errorText;
-
+  final TextAlign? textAlign;
+  final TextStyle? hintStyle;
+  final TextStyle? textStyle;
   const CustomTextField({
     super.key,
     required this.hintText,
@@ -42,6 +44,9 @@ class CustomTextField extends StatelessWidget {
     this.prefixIcon,
     this.focusNode,
     this.errorText,
+    this.textAlign,
+    this.hintStyle,
+    this.textStyle,
   });
 
   @override
@@ -58,10 +63,12 @@ class CustomTextField extends StatelessWidget {
         onEditingComplete: () {
           FocusScope.of(context).unfocus();
         },
-        style: TextStyles.h4.copyWith(fontSize: 16.sp, color: Colors.black),
+        style: textStyle ??
+            TextStyles.h4.copyWith(fontSize: 16.sp, color: Colors.black),
         maxLength: maxLength,
-        cursorColor: ColorStyles.black,
+        cursorColor: ColorStyles.white,
         inputFormatters: inputFormatters,
+        textAlign: textAlign ?? TextAlign.start,
         onFieldSubmitted: onFieldSubmitteed,
         onChanged: onChanged,
         decoration: InputDecoration(
@@ -86,7 +93,7 @@ class CustomTextField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide: const BorderSide(
-              color: ColorStyles.white,
+              color: ColorStyles.blue,
             ), //textFieldBorderColor
           ),
           border: OutlineInputBorder(
@@ -104,10 +111,11 @@ class CustomTextField extends StatelessWidget {
           errorStyle: TextStyle(color: Colors.red),
           hintText: hintText,
           prefixIcon: prefixIcon,
-          hintStyle: TextStyles.h4.copyWith(
-            color: Colors.black.withValues(alpha: 0.5),
-            fontSize: 16.sp,
-          ),
+          hintStyle: hintStyle ??
+              TextStyles.h4.copyWith(
+                color: Colors.black.withValues(alpha: 0.5),
+                fontSize: 16.sp,
+              ),
         ),
       ),
     );

@@ -113,6 +113,10 @@ flutter:
           weight: 700
         - asset: assets/fonts/Roboto-Black.ttf
           weight: 900
+    - family: MTSCompact
+      fonts:
+        - asset: assets/fonts/MTSCompact-Bold.ttf
+          weight: 700
 
 flutter_intl:
   enabled: true

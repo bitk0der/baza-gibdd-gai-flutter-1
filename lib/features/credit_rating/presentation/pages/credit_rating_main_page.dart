@@ -118,7 +118,7 @@ class _CreditRatingMainPageState extends State<CreditRatingMainPage>
                     child: Row(
                       children: [
                         AppCircleButton(
-                          icon: Assets.icons.documents,
+                          icon: Assets.icons.documentsSvg,
                           radius: 100,
                           buttonSize: 36,
                           padding: 8,

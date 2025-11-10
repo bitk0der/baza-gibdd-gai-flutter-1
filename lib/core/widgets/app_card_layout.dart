@@ -51,7 +51,7 @@ class AppCardLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!isVisible) return const SizedBox.shrink();
 
-    final double r = (radius ?? 12.r);
+    final double r = (radius ?? 20.r);
     final BorderRadiusGeometry br = borderRadius ?? BorderRadius.circular(r);
     final double strokeWidth = gradientBorder != null ? 1.0 : 0.0;
 

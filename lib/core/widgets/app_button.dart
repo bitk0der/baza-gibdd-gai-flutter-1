@@ -20,7 +20,7 @@ class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
     this.title,
-    this.backgroundColor = ColorStyles.primaryBlue,
+    this.backgroundColor = ColorStyles.secondaryBlue,
     this.titleColor = ColorStyles.white,
     this.onTap,
     this.borderRadius = 16,

@@ -11,6 +11,9 @@
 class FontFamily {
   FontFamily._();
 
+  /// Font family: MTSCompact
+  static const String mTSCompact = 'MTSCompact';
+
   /// Font family: Roboto
   static const String roboto = 'Roboto';
 }

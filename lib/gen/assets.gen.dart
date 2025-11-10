@@ -17,6 +17,9 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsFontsGen {
   const $AssetsFontsGen();
 
+  /// File path: assets/fonts/MTSCompact-Bold.ttf
+  String get mTSCompactBold => 'assets/fonts/MTSCompact-Bold.ttf';
+
   /// File path: assets/fonts/Roboto-Black.ttf
   String get robotoBlack => 'assets/fonts/Roboto-Black.ttf';
 
@@ -31,7 +34,7 @@ class $AssetsFontsGen {
 
   /// List of all assets
   List<String> get values =>
-      [robotoBlack, robotoBold, robotoMedium, robotoRegular];
+      [mTSCompactBold, robotoBlack, robotoBold, robotoMedium, robotoRegular];
 }
 
 class $AssetsIconsGen {
@@ -54,8 +57,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/close_icon.svg
   SvgGenImage get closeIcon => const SvgGenImage('assets/icons/close_icon.svg');
 
+  /// File path: assets/icons/documents,.svg
+  SvgGenImage get documentsSvg =>
+      const SvgGenImage('assets/icons/documents,.svg');
+
   /// File path: assets/icons/documents.svg
-  SvgGenImage get documents => const SvgGenImage('assets/icons/documents.svg');
+  SvgGenImage get documentsSvg_ =>
+      const SvgGenImage('assets/icons/documents.svg');
 
   /// File path: assets/icons/green_verified.svg
   SvgGenImage get greenVerified =>
@@ -83,6 +91,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/search.svg
   SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
 
+  /// File path: assets/icons/two_arrows.svg
+  SvgGenImage get twoArrows => const SvgGenImage('assets/icons/two_arrows.svg');
+
   /// File path: assets/icons/unactive_circle.svg
   SvgGenImage get unactiveCircle =>
       const SvgGenImage('assets/icons/unactive_circle.svg');
@@ -105,13 +116,15 @@ class $AssetsIconsGen {
         carIcon,
         clock,
         closeIcon,
-        documents,
+        documentsSvg,
+        documentsSvg_,
         greenVerified,
         hexagon,
         messageIcon,
         personIcon,
         russianSymbol,
         search,
+        twoArrows,
         unactiveCircle,
         verifiedShield,
         verifyMark,
@@ -129,6 +142,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/background_image.png
   AssetGenImage get backgroundImage =>
       const AssetGenImage('assets/images/background_image.png');
+
+  /// File path: assets/images/background_image_with_borders.png
+  AssetGenImage get backgroundImageWithBorders =>
+      const AssetGenImage('assets/images/background_image_with_borders.png');
+
+  /// File path: assets/images/car_main.png
+  AssetGenImage get carMain =>
+      const AssetGenImage('assets/images/car_main.png');
 
   /// File path: assets/images/check_owner.png
   AssetGenImage get checkOwner =>
@@ -157,6 +178,8 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
         aiHelper,
         backgroundImage,
+        backgroundImageWithBorders,
+        carMain,
         checkOwner,
         editProfileImage,
         emptyLoans,
