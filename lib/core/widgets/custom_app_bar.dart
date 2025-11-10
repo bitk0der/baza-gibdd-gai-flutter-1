@@ -82,15 +82,16 @@ class CustomAppBar {
       preferredSize: Size.fromHeight(kToolbarHeight + 15.h),
       child: Container(
         decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: ColorStyles.appbarGradient,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter),
           image: !isNeedImage
               ? null
               : DecorationImage(
                   image: AssetImage(Assets.images.mockConsultantAvatar.path),
                   fit: BoxFit.cover,
                 ),
-          borderRadius: BorderRadiusGeometry.vertical(
-            bottom: Radius.circular(borderRadius),
-          ),
         ),
         child: AppBar(
           elevation: 0,

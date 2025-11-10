@@ -14,6 +14,9 @@ class FontFamily {
   /// Font family: MTSCompact
   static const String mTSCompact = 'MTSCompact';
 
+  /// Font family: Oswald
+  static const String oswald = 'Oswald';
+
   /// Font family: Roboto
   static const String roboto = 'Roboto';
 }

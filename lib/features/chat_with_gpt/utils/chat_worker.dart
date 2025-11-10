@@ -124,11 +124,11 @@ class ChatWorker {
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(vertical: 8.h),
       width: double.infinity,
-      color: Colors.white,
+      color: Colors.transparent,
       child: Text(
         data,
         style: TextStyles.h2.copyWith(
-          color: Colors.black.withValues(alpha: 0.5),
+          color: Colors.white.withValues(alpha: 0.7),
           fontWeight: FontWeight.w700,
           fontSize: 12.sp,
         ),

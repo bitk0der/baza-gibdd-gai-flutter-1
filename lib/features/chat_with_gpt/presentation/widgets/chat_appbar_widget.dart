@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/theme/app_fonts.dart';
-import 'package:baza_gibdd_gai/gen/assets.gen.dart';
 
 class ChatAppbarWidget extends StatefulWidget implements PreferredSizeWidget {
   final String consultantName;
@@ -70,12 +69,10 @@ class _ChatAppbarWidgetState extends State<ChatAppbarWidget>
     return Container(
       decoration: BoxDecoration(
         color: ColorStyles.white,
-        image: DecorationImage(
-          image: AssetImage(Assets.images.backgroundImage.path),
-          fit: BoxFit.cover,
-        ),
-        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
-        border: const Border(bottom: BorderSide(color: Colors.white10)),
+        gradient: LinearGradient(
+            colors: ColorStyles.appbarGradient,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter),
       ),
       child: SafeArea(
         bottom: false,
@@ -90,14 +87,24 @@ class _ChatAppbarWidgetState extends State<ChatAppbarWidget>
   SlideTransition mainChild() => SlideTransition(
         position: _animation2,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
               children: [
-                Assets.images.mockConsultantAvatar
+                /*  Assets.images.mockConsultantAvatar
                     .image(width: 44.w, height: 44.w),
-                SizedBox(width: 16.w),
-                Column(
+                SizedBox(width: 16.w), */
+                Center(
+                  child: Text(
+                    'Чaт',
+                    style: TextStyles.h2.copyWith(
+                      fontSize: 18.sp,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                )
+                /*  Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -115,7 +122,7 @@ class _ChatAppbarWidgetState extends State<ChatAppbarWidget>
                       ),
                     ),
                   ],
-                ),
+                ), */
               ],
             ),
             /*  Row(

@@ -78,7 +78,12 @@ class _HomeScreenState extends State<HomeChatScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: Color(0xffDEF6FF)),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            colors: ColorStyles.backgroundGradient,
+            end: Alignment.bottomCenter,
+            begin: Alignment.topCenter),
+      ),
       child: BlocListener<ChatCubit, ChatState>(
         bloc: _chatCubit,
         listener: (context, state) async {
@@ -104,7 +109,7 @@ class _HomeScreenState extends State<HomeChatScreen>
               children: [
                 Scaffold(
                   resizeToAvoidBottomInset: true,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.transparent,
                   body: Column(
                     children: [
                       ChatAppbarWidget(
@@ -211,9 +216,12 @@ class _HomeScreenState extends State<HomeChatScreen>
       key: _formKey,
       child: Container(
         padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: ColorStyles.primaryBlue,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          image: DecorationImage(
+              image:
+                  AssetImage(Assets.images.backgroundImageChatWithBorders.path),
+              fit: BoxFit.fill),
         ),
         child: SafeArea(
           top: false,
@@ -265,23 +273,26 @@ class _HomeScreenState extends State<HomeChatScreen>
                     padding: const EdgeInsets.all(16),
                     controller: textEditingController,
                     keyboardType: TextInputType.name,
+                    textStyle: TextStyles.h3.copyWith(color: Colors.white),
                     onFieldSubmitteed: (message) =>
                         onFieldSubmitted(message, state),
                     validator: (value) => value?.isEmpty ?? true
                         ? '*поле не может быть пустым'
                         : null,
-                    fillColor: Colors.white,
                     hintText: 'Сообщение...',
+                    hintStyle: TextStyles.h3
+                        .copyWith(color: Colors.white.withValues(alpha: 0.5)),
                   ),
                 ),
                 const SizedBox(width: 10),
                 AppCircleButton(
                   onTap: () =>
                       onFieldSubmitted(textEditingController.text, state),
-                  buttonSize: 46,
+                  buttonSize: 49,
+                  gradient: ColorStyles.blueTabBarGradient,
                   backgroundColor: ColorStyles.primaryBlue,
-                  padding: 10,
-                  icon: Assets.icons.navBarIcons.chatNavBarIcon,
+                  padding: 11,
+                  icon: Assets.icons.send,
                 ),
               ],
             ),

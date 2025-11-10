@@ -4,6 +4,7 @@ import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/theme/app_fonts.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_button.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_card_layout.dart';
+import 'package:baza_gibdd_gai/core/widgets/app_gradient_svg_icon.dart';
 import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/widgets/custom_textfield.dart';
 import 'package:contentsize_tabbarview/contentsize_tabbarview.dart';
 import 'package:flutter/material.dart';
@@ -237,17 +238,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             isGreenCard
                 ? Assets.icons.documentsSvg.svg()
-                : ShaderMask(
-                    shaderCallback: (Rect bounds) {
-                      return LinearGradient(
-                        colors: ColorStyles.orangeIconGradient,
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ).createShader(bounds);
-                    },
-                    blendMode: BlendMode
-                        .srcATop, // Используем srcATop для корректного наложения градиента
-                    child: Assets.icons.navBarIcons.finesNavBarIcon.svg()),
+                : AppGradientSvgIcon(
+                    gradient: ColorStyles.orangeIconGradient,
+                    icon: Assets.icons.navBarIcons.finesNavBarIcon),
             Assets.icons.twoArrows.svg()
           ]),
           const SizedBox(height: 14),

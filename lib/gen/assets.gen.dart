@@ -20,6 +20,9 @@ class $AssetsFontsGen {
   /// File path: assets/fonts/MTSCompact-Bold.ttf
   String get mTSCompactBold => 'assets/fonts/MTSCompact-Bold.ttf';
 
+  /// File path: assets/fonts/Oswald-SemiBold.ttf
+  String get oswaldSemiBold => 'assets/fonts/Oswald-SemiBold.ttf';
+
   /// File path: assets/fonts/Roboto-Black.ttf
   String get robotoBlack => 'assets/fonts/Roboto-Black.ttf';
 
@@ -33,8 +36,14 @@ class $AssetsFontsGen {
   String get robotoRegular => 'assets/fonts/Roboto-Regular.ttf';
 
   /// List of all assets
-  List<String> get values =>
-      [mTSCompactBold, robotoBlack, robotoBold, robotoMedium, robotoRegular];
+  List<String> get values => [
+        mTSCompactBold,
+        oswaldSemiBold,
+        robotoBlack,
+        robotoBold,
+        robotoMedium,
+        robotoRegular
+      ];
 }
 
 class $AssetsIconsGen {
@@ -91,6 +100,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/search.svg
   SvgGenImage get search => const SvgGenImage('assets/icons/search.svg');
 
+  /// File path: assets/icons/send.svg
+  SvgGenImage get send => const SvgGenImage('assets/icons/send.svg');
+
   /// File path: assets/icons/two_arrows.svg
   SvgGenImage get twoArrows => const SvgGenImage('assets/icons/two_arrows.svg');
 
@@ -124,6 +136,7 @@ class $AssetsIconsGen {
         personIcon,
         russianSymbol,
         search,
+        send,
         twoArrows,
         unactiveCircle,
         verifiedShield,
@@ -143,6 +156,10 @@ class $AssetsImagesGen {
   AssetGenImage get backgroundImage =>
       const AssetGenImage('assets/images/background_image.png');
 
+  /// File path: assets/images/background_image_chat_with_borders.png
+  AssetGenImage get backgroundImageChatWithBorders => const AssetGenImage(
+      'assets/images/background_image_chat_with_borders.png');
+
   /// File path: assets/images/background_image_with_borders.png
   AssetGenImage get backgroundImageWithBorders =>
       const AssetGenImage('assets/images/background_image_with_borders.png');
@@ -150,6 +167,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/car_main.png
   AssetGenImage get carMain =>
       const AssetGenImage('assets/images/car_main.png');
+
+  /// File path: assets/images/chat_introducing_screen.png
+  AssetGenImage get chatIntroducingScreen =>
+      const AssetGenImage('assets/images/chat_introducing_screen.png');
 
   /// File path: assets/images/check_owner.png
   AssetGenImage get checkOwner =>
@@ -178,8 +199,10 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
         aiHelper,
         backgroundImage,
+        backgroundImageChatWithBorders,
         backgroundImageWithBorders,
         carMain,
+        chatIntroducingScreen,
         checkOwner,
         editProfileImage,
         emptyLoans,

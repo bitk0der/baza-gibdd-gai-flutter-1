@@ -11,6 +11,8 @@ class ColorStyles {
   static const Color lightOrange = Color(0xffFFD600);
   static const Color green = Color(0xff2EA36E);
   static const Color blue = Color(0xff1E80FF);
+  static const Color blueCardColor = Color(0xff234B7D);
+  static const Color lightBlueCardColor = Color(0xff9DD3F9);
   static const invoiceStatusRed = Color(0xffFF331F);
   static const backgroundViolet = Color(0xff1C172B);
   static const inactiveNavBarItemColor = Color.fromRGBO(77, 61, 61, 0.2);
@@ -53,6 +55,22 @@ class ColorStyles {
     Color(0xffFF7B08),
     Color(0xffDFA832),
   ];
+
+  static const List<Color> blueIconGradient = [
+    Color(0xff41DEF6),
+    Color(0xff2285DF),
+  ];
+
+  static const List<Color> appbarGradient = [
+    Color(0xff0C0E22),
+    Color(0xff131A2D),
+  ];
+
+  static const List<Color> backgroundGradient = [
+    Color(0xff0F091F),
+    Color(0xff191B1C),
+  ];
+
   static const docTypesColors = [
     Color(0xff509949),
     Color(0xffF27A11),

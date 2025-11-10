@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:baza_gibdd_gai/core/routes/onboarding_guard.dart';
 import 'package:baza_gibdd_gai/features/app_banner/presentation/app_web_view.dart';
 import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/pages/favourites_page.dart';
 import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/pages/home_chat_screen.dart';
+import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/pages/introduction_screen.dart';
 import 'package:baza_gibdd_gai/features/credit_rating/data/models/payment_response.dart';
 import 'package:baza_gibdd_gai/features/credit_rating/data/models/product_model.dart';
 import 'package:baza_gibdd_gai/features/credit_rating/presentation/pages/checkout_page.dart';
@@ -28,6 +30,7 @@ part 'app_router.gr.dart';
 class AppRouter extends RootStackRouter {
   AppRouter(GlobalKey<NavigatorState>? navigatorKey)
       : super(navigatorKey: navigatorKey);
+  final onboardingGuard = OnboardingGuard();
   @override
   List<AutoRoute> get routes {
     return [
@@ -54,7 +57,11 @@ class AppRouter extends RootStackRouter {
             page: ChatRouter.page,
             path: 'chat',
             children: [
-              AutoRoute(page: HomeChatRoute.page, path: ''),
+              AutoRoute(page: OnboardingRoute.page),
+              AutoRoute(
+                  page: HomeChatRoute.page,
+                  guards: [onboardingGuard],
+                  path: ''),
               AutoRoute(page: AppWebViewPage.page, path: 'app_webview'),
             ],
           ),

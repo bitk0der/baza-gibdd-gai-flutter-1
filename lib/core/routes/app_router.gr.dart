@@ -484,6 +484,22 @@ class NotificationDetailsRouteArgs {
 }
 
 /// generated route for
+/// [OnboardingScreen]
+class OnboardingRoute extends PageRouteInfo<void> {
+  const OnboardingRoute({List<PageRouteInfo>? children})
+      : super(OnboardingRoute.name, initialChildren: children);
+
+  static const String name = 'OnboardingRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const OnboardingScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [PaymentHistoryScreen]
 class PaymentHistoryRoute extends PageRouteInfo<void> {
   const PaymentHistoryRoute({List<PageRouteInfo>? children})

@@ -117,6 +117,10 @@ flutter:
       fonts:
         - asset: assets/fonts/MTSCompact-Bold.ttf
           weight: 700
+    - family: Oswald
+      fonts:
+        - asset: assets/fonts/Oswald-SemiBold.ttf
+          weight: 600
 
 flutter_intl:
   enabled: true

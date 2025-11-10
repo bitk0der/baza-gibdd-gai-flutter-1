@@ -16,11 +16,11 @@ class AppCircleButton extends StatefulWidget {
   final bool isNeedShadow;
   final Widget? customChild;
   final EdgeInsets? customEdgeInsets;
-
+  final List<Color>? gradient;
   const AppCircleButton({
     super.key,
     this.onTap,
-    this.radius = 12,
+    this.radius = 14,
     this.backgroundColor = ColorStyles.white,
     required this.icon,
     this.padding = 9,
@@ -31,6 +31,7 @@ class AppCircleButton extends StatefulWidget {
     this.iconColor,
     this.customChild,
     this.customEdgeInsets,
+    this.gradient,
   });
 
   @override
@@ -52,6 +53,9 @@ class _AppCircleButtonState extends State<AppCircleButton> {
           borderRadius: widget.radius == 100
               ? null
               : BorderRadius.circular(widget.radius),
+          gradient: widget.gradient == null
+              ? null
+              : LinearGradient(colors: widget.gradient!),
           color: widget.backgroundColor,
           boxShadow: widget.isNeedShadow
               ? [
