@@ -57,10 +57,8 @@ class _CustomTextFieldScreenState extends State<CustomTextField> {
     }
 
     return AppCardLayout(
-      color: Colors.white,
-      border: localError != null
-          ? Border.all(color: ColorStyles.invoiceStatusRed, width: 1)
-          : Border.all(color: Colors.transparent, width: 1),
+      color: Colors.transparent,
+      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -68,9 +66,9 @@ class _CustomTextFieldScreenState extends State<CustomTextField> {
           Text(
             widget.title,
             style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 16.sp,
-              color: ColorStyles.black,
+              fontWeight: FontWeight.w400,
+              fontSize: 15.sp,
+              color: ColorStyles.white,
             ),
           ),
           SizedBox(height: 5.h),
@@ -98,10 +96,9 @@ class _CustomTextFieldScreenState extends State<CustomTextField> {
                       UpperCaseTextFormatter(),
                     ],
                 style: TextStyle(
-                  fontFamily: "PTSans",
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w400,
-                  color: ColorStyles.primaryBlue,
+                  color: ColorStyles.white,
                 ),
                 maxLength: widget.maxLength,
                 cursorColor: ColorStyles.invoiceStatusRed,
@@ -161,10 +158,9 @@ class _CustomTextFieldScreenState extends State<CustomTextField> {
                       fontWeight: FontWeight.w600),
                   hintText: widget.hintText,
                   hintStyle: TextStyle(
-                    fontFamily: "PTSans",
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
-                    color: ColorStyles.primaryBlue,
+                    color: ColorStyles.white.withValues(alpha: 0.5),
                   ),
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'package:baza_gibdd_gai/core/widgets/app_gradient_svg_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
@@ -31,23 +32,33 @@ class EmptySearchPlaceholder extends StatelessWidget {
                     child: Text('Поздравляем!',
                         style: TextStyles.h2.copyWith(fontSize: 20.sp)),
                   ), */
+
+                  SizedBox(height: 20.h),
+                  SizedBox(
+                    width: 60.w,
+                    height: 60.w,
+                    child: AppGradientSvgIcon(
+                        gradient: ColorStyles.cardGradient,
+                        icon: Assets.icons.verifiedShield),
+                  ),
                   SizedBox(height: 20.h),
                   Text(
-                    'По вашему запросу задолженностей не найдено',
+                    'У вас нет неоплаченных начислений'.toUpperCase(),
                     style: TextStyle(
                       fontSize: 34.sp,
                       height: 1.1,
-                      color: ColorStyles.black,
+                      color: ColorStyles.white,
+                      fontFamily: 'Oswald',
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                   SizedBox(height: 16.h),
                   Text(
-                    'Подпишитесь на уведомления и узнайте первыми о новых задолженностях',
+                    'Подпишитесь на уведомления по заданным параметрам и вы первым узнаете, как появится новая задолженность',
                     style: TextStyle(
                       fontSize: 20.sp,
                       height: 1.1,
-                      color: ColorStyles.black,
+                      color: ColorStyles.white.withValues(alpha: 0.8),
                       fontWeight: FontWeight.w400,
                     ),
                   ),

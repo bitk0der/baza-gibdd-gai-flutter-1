@@ -1,17 +1,19 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
+import 'package:baza_gibdd_gai/core/widgets/app_button.dart';
+import 'package:baza_gibdd_gai/core/widgets/app_card_layout.dart';
+import 'package:baza_gibdd_gai/core/widgets/app_custom_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/utils/check_utils.dart';
 import 'package:baza_gibdd_gai/core/utils/ui_util.dart';
-import 'package:baza_gibdd_gai/core/widgets/app_button_gradient.dart';
 import 'package:baza_gibdd_gai/core/widgets/custom_app_bar.dart';
 import 'package:baza_gibdd_gai/features/payments/data/models/user_data.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/blocs/user_data_bloc.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/pages/fine/fine_search_screen.dart';
-import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_button.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_snackbar.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_textfield.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/how_to_fill_card.dart';
@@ -38,10 +40,15 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
   int _tabIndex = 0;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var keyboardVisibilityController = KeyboardVisibilityController();
+  bool keyboardVisible = false;
 
   @override
   void initState() {
     _bloc = GetIt.I<UserDataBloc>();
+    keyboardVisibilityController.onChange.listen((visible) {
+      setState(() => keyboardVisible = visible);
+    });
     super.initState();
     addPostFrameCallback(() {
       _passportController.text = _bloc.userData.passport ?? '';
@@ -62,38 +69,26 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
+      child: AppCustomScaffold(
         key: _scaffoldKey,
-        resizeToAvoidBottomInset: false,
         appBar: CustomAppBar.getAppBar(
           title: 'Проверка штрафов ГИБДД',
           onTapBackButton: () => context.maybePop(),
         ),
-        backgroundColor: ColorStyles.fillColor,
-        body: SafeArea(
-          child: _getBody(),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.all(16),
+        body: _getBody(),
+        floatingActionButton: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: AppButtonGradient(
-                  borderRadius: 14,
-                  backgroundColor: const Color(0xffCADBF8),
-                  titleColor: ColorStyles.blue,
-                  onTap: () => _onButtonPressed(true),
-                  title: 'СОХРАНИТЬ ДАННЫЕ В ПРОФИЛЬ',
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: AppButton(
+                  height: 51,
+                  title: "Проверить наличие штрафов",
+                  onTap: _onButtonPressed,
                 ),
               ),
-              CustomButton(
-                title: "Проверить начисления",
-                height: 50.h,
-                onTap: _onButtonPressed,
-              ),
+              if (!keyboardVisible) SizedBox(height: 125.h),
             ],
           ),
         ),
@@ -109,27 +104,32 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
         children: [
           AppUniversalBannerWidget(category: 'pays-page', banners: bannerList),
           SizedBox(height: 16.h),
-          Row(
-            children: [
-              Flexible(
-                child: TabButton(
-                    isActive: _tabIndex == 0,
-                    text: 'Паспорт РФ',
-                    onTap: () => onTap(0)),
-              ),
-              SizedBox(width: 7.w),
-              Flexible(
+          AppCardLayout(
+            padding: EdgeInsets.all(4),
+            color: ColorStyles.backgroundViolet,
+            border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+            child: Row(
+              children: [
+                Flexible(
                   child: TabButton(
-                      isActive: _tabIndex == 1,
-                      text: 'ВУ',
-                      onTap: () => onTap(1))),
-              SizedBox(width: 7.w),
-              Flexible(
-                  child: TabButton(
-                      isActive: _tabIndex == 2,
-                      text: 'СТС',
-                      onTap: () => onTap(2))),
-            ],
+                      isActive: _tabIndex == 0,
+                      text: 'Паспорт',
+                      onTap: () => onTap(0)),
+                ),
+                SizedBox(width: 7.w),
+                Flexible(
+                    child: TabButton(
+                        isActive: _tabIndex == 1,
+                        text: 'ВУ',
+                        onTap: () => onTap(1))),
+                SizedBox(width: 7.w),
+                Flexible(
+                    child: TabButton(
+                        isActive: _tabIndex == 2,
+                        text: 'СТС',
+                        onTap: () => onTap(2))),
+              ],
+            ),
           ),
           SizedBox(height: 30.h),
           _getTabs(),
@@ -163,7 +163,7 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
                 title: 'Паспортные данные',
                 backgroundColor: const Color(0xff4065E4),
                 iconColor: Colors.white,
-                image: Assets.images.aiHelper),
+                image: Assets.images.passportHelp),
           ],
         ),
         Column(
@@ -192,7 +192,7 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
                 title: 'Серия и номер ВУ',
                 backgroundColor: const Color(0xff4065E4),
                 iconColor: Colors.white,
-                image: Assets.images.aiHelper),
+                image: Assets.images.vuHelp),
           ],
         ),
         Column(
@@ -216,7 +216,7 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
                 title: 'СТС автомобиля',
                 backgroundColor: const Color(0xff4065E4),
                 iconColor: Colors.white,
-                image: Assets.images.aiHelper),
+                image: Assets.images.stsHelp),
           ],
         ),
       ],
@@ -262,7 +262,7 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
             CustomSnackbar.show(context, _scaffoldKey,
                 text: "Заполните хотя бы одно из полей");
           } else {
-            var isNeedSaveUserData = await showModal(context);
+            /*  var isNeedSaveUserData = await showModal(context); */
 
             final userData = _bloc.userData.copyWith(
               passport: _tabIndex == 0 ? _passportController.text : null,
@@ -270,9 +270,9 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
               sts: _tabIndex == 2 ? sts : null,
               forceNull: false,
             );
-            if (isNeedSaveUserData) {
-              _bloc.add(UserDataBlocSaveEvent(userData));
-            }
+
+            _bloc.add(UserDataBlocSaveEvent(userData));
+
             if (!onlySave) {
               Navigator.push(
                 context,
@@ -287,10 +287,6 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
                           ),
                         )),
               );
-            } else if (isNeedSaveUserData) {
-              var snackbar =
-                  const SnackBar(content: Text('Данные успешно сохранены'));
-              ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
           }
         }

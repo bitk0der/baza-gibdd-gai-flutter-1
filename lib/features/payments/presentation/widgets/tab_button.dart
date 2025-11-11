@@ -26,16 +26,21 @@ class _TabButtonState extends State<TabButton> {
       child: AnimatedContainer(
         width: double.infinity,
         duration: const Duration(milliseconds: 300),
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 11.h),
+        padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 13.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: widget.isActive ? ColorStyles.blue : ColorStyles.white,
+          gradient: widget.isActive
+              ? LinearGradient(colors: ColorStyles.blueTabBarGradient)
+              : null,
+          color: widget.isActive ? ColorStyles.blue : Colors.transparent,
         ),
         child: AnimatedDefaultTextStyle(
           duration: const Duration(milliseconds: 300),
           textAlign: TextAlign.center,
           style: TextStyles.h4.copyWith(
-              color: widget.isActive ? Colors.white : ColorStyles.black),
+              color: widget.isActive
+                  ? Colors.white
+                  : ColorStyles.white.withValues(alpha: 0.5)),
           child: Text(widget.text),
         ),
       ),

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 Future<bool> showModal(BuildContext context) async =>
     await showModalBottomSheet(
         context: context,
+        useRootNavigator: true,
         builder: (ctx) => Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
               decoration: const BoxDecoration(
@@ -16,42 +17,44 @@ Future<bool> showModal(BuildContext context) async =>
                     top: Radius.circular(20),
                   ),
                   color: Colors.white),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Flexible(
-                          child: Text(
-                        'Вы хотите перезаписать данные?',
-                        style: TextStyles.h1,
-                      )),
-                      AppCircleButton(
-                          icon: Assets.icons.closeIcon,
-                          backgroundColor: Colors.black12,
-                          onTap: () => ctx.maybePop(false))
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Предыдущие данные будут сброшены и заменены на новые. Мониторинг будет производится уже по новым данным',
-                    style: TextStyles.h4.copyWith(fontSize: 17),
-                  ),
-                  const SizedBox(height: 24),
-                  AppButton(
-                    title: 'Перезаписать данные',
-                    onTap: () => ctx.maybePop(true),
-                  ),
-                  const SizedBox(height: 14),
-                  AppButton(
-                    title: 'Отменить',
-                    titleColor: Colors.black,
-                    backgroundColor: ColorStyles.black.withValues(alpha: 0.1),
-                    onTap: () => ctx.maybePop(false),
-                  ),
-                ],
+              child: SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
+                            child: Text(
+                          'Вы хотите перезаписать данные?',
+                          style: TextStyles.h1,
+                        )),
+                        AppCircleButton(
+                            icon: Assets.icons.closeIcon,
+                            backgroundColor: Colors.black12,
+                            onTap: () => ctx.maybePop(false))
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Предыдущие данные будут сброшены и заменены на новые. Мониторинг будет производится уже по новым данным',
+                      style: TextStyles.h4.copyWith(fontSize: 17),
+                    ),
+                    const SizedBox(height: 24),
+                    AppButton(
+                      title: 'Перезаписать данные',
+                      onTap: () => ctx.maybePop(true),
+                    ),
+                    const SizedBox(height: 14),
+                    AppButton(
+                      title: 'Отменить',
+                      titleColor: Colors.black,
+                      backgroundColor: ColorStyles.black.withValues(alpha: 0.1),
+                      onTap: () => ctx.maybePop(false),
+                    ),
+                  ],
+                ),
               ),
             ));
 

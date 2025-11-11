@@ -199,6 +199,17 @@ class $AssetsImagesGen {
   AssetGenImage get mockConsultantAvatar =>
       const AssetGenImage('assets/images/mockConsultantAvatar.png');
 
+  /// File path: assets/images/passport_help.png
+  AssetGenImage get passportHelp =>
+      const AssetGenImage('assets/images/passport_help.png');
+
+  /// File path: assets/images/sts_help.png
+  AssetGenImage get stsHelp =>
+      const AssetGenImage('assets/images/sts_help.png');
+
+  /// File path: assets/images/vu_help.png
+  AssetGenImage get vuHelp => const AssetGenImage('assets/images/vu_help.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         aiHelper,
@@ -211,7 +222,10 @@ class $AssetsImagesGen {
         editProfileImage,
         emptyLoans,
         mainImage,
-        mockConsultantAvatar
+        mockConsultantAvatar,
+        passportHelp,
+        stsHelp,
+        vuHelp
       ];
 }
 

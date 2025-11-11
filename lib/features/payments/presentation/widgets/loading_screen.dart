@@ -39,7 +39,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     return Container(
       width: double.maxFinite,
       height: double.maxFinite,
-      color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -105,9 +104,8 @@ class LoadingSearchIndicator extends StatelessWidget {
                   width: 59.r,
                   height: 59.r,
                   child: CircularProgressIndicator(
-                    color: ColorStyles.invoiceStatusRed,
-                    backgroundColor:
-                        ColorStyles.invoiceStatusRed.withOpacity(0.5),
+                    color: ColorStyles.blue,
+                    backgroundColor: ColorStyles.blue.withValues(alpha: 0.5),
                   ),
                 ),
               ),
@@ -116,7 +114,7 @@ class LoadingSearchIndicator extends StatelessWidget {
                 'Идет проверка задолженности',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: ColorStyles.primaryBlue,
+                  color: ColorStyles.white,
                   fontSize: 28.sp,
                   fontWeight: FontWeight.w500,
                 ),
@@ -125,7 +123,7 @@ class LoadingSearchIndicator extends StatelessWidget {
               Text(
                 'Осталось:',
                 style: TextStyle(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.white.withOpacity(0.5),
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w400,
                 ),
@@ -178,7 +176,7 @@ class _ShowTimerState extends State<_ShowTimer> {
         Text(
           ':',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 14.sp,
             fontWeight: FontWeight.w400,
           ),
@@ -214,15 +212,15 @@ class _ShowTimerState extends State<_ShowTimer> {
       height: 50.r,
       margin: EdgeInsets.only(right: 6.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ColorStyles.fillColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: ColorStyles.invoiceStatusRed),
+        border: Border.all(color: ColorStyles.blue),
       ),
       child: Center(
         child: Text(
           text,
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 24.sp,
             fontWeight: FontWeight.w500,
           ),

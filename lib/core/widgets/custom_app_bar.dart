@@ -73,7 +73,7 @@ class CustomAppBar {
     List<Widget>? actions,
     bool isBackButton = true,
     VoidCallback? onTapBackButton,
-    bool isNeedImage = true,
+    bool isNeedImage = false,
     double borderRadius = 16,
     bool isTitleCenter = false,
     required String title,

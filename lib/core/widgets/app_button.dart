@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppButton extends StatelessWidget {
   final String? title;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final Color titleColor;
   final TextStyle? titleStyle;
   final double borderRadius;
@@ -20,7 +20,7 @@ class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
     this.title,
-    this.backgroundColor = ColorStyles.secondaryBlue,
+    this.backgroundColor,
     this.titleColor = ColorStyles.white,
     this.onTap,
     this.borderRadius = 16,
@@ -40,10 +40,12 @@ class AppButton extends StatelessWidget {
       margin: margin,
       height: height == 50 ? null : height,
       decoration: BoxDecoration(
-          color: backgroundColor,
+          color: backgroundColor ?? ColorStyles.secondaryBlue,
           border: boxBorder,
           borderRadius: BorderRadius.circular(borderRadius),
-          gradient: LinearGradient(colors: ColorStyles.blueTabBarGradient)),
+          gradient: backgroundColor == ColorStyles.secondaryBlue
+              ? null
+              : LinearGradient(colors: ColorStyles.blueTabBarGradient)),
       duration: standartDuration,
       child: TextButton(
         onPressed: isLoading ? null : onTap,

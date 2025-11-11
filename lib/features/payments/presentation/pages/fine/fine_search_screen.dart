@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:baza_gibdd_gai/core/utils/sp_util.dart';
+import 'package:baza_gibdd_gai/core/widgets/app_custom_scaffold.dart';
 import 'package:baza_gibdd_gai/features/payments/data/repositories/api_util.dart';
 import 'package:baza_gibdd_gai/features/payments/domain/repositories/search_data_repository.dart';
 import 'package:baza_gibdd_gai/features/payments/domain/repositories/storage_data_repository.dart';
@@ -82,16 +83,12 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
+      child: AppCustomScaffold(
         key: _scaffoldKey,
-        resizeToAvoidBottomInset: false,
-        backgroundColor: ColorStyles.white,
         appBar: CustomAppBar.getAppBar(
             title: Strings.fineScreenTitle,
             onTapBackButton: () => context.maybePop()),
-        body: SafeArea(
-          child: _getBodyBuilder(),
-        ),
+        body: _getBodyBuilder(),
       ),
     );
   }
@@ -387,88 +384,90 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
           contentPadding: EdgeInsets.zero,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(6))),
-          backgroundColor: Colors.white,
-          content: Padding(
-            padding: EdgeInsets.only(top: 16.h),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Уведомление оформлено',
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            color: ColorStyles.black,
-                            fontWeight: FontWeight.w500,
+          backgroundColor: Colors.red,
+          content: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(top: 16.h),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Уведомление оформлено',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              color: ColorStyles.black,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                      InkWell(
-                        child: Icon(
-                          Icons.close,
-                          size: 24.w,
-                          color: ColorStyles.black,
+                        InkWell(
+                          child: Icon(
+                            Icons.close,
+                            size: 24.w,
+                            color: ColorStyles.black,
+                          ),
+                          onTap: () => Navigator.pop(context),
                         ),
-                        onTap: () => Navigator.pop(context),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Text(
-                    'Вы будете получать уведомления о новых задолженностях по этому поиску.\nПолучение уведомлений можно отменить в разделе “Профиль”.',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: ColorStyles.black,
-                      fontWeight: FontWeight.w400,
+                      ],
                     ),
                   ),
-                ),
-                SizedBox(height: 20.h),
-                SizedBox(
-                  height: 60.h,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 1.h,
-                        width: double.maxFinite,
+                  SizedBox(height: 10.h),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Text(
+                      'Вы будете получать уведомления о новых задолженностях по этому поиску.\nПолучение уведомлений можно отменить в разделе “Профиль”.',
+                      style: TextStyle(
+                        fontSize: 16.sp,
                         color: ColorStyles.black,
+                        fontWeight: FontWeight.w400,
                       ),
-                      const Spacer(),
-                      SizedBox(
-                        height: 50.h,
-                        width: double.maxFinite,
-                        child: TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          style: TextButton.styleFrom(
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Закрыть',
-                              style: TextStyle(
-                                color: ColorStyles.black,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.sp,
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  SizedBox(
+                    height: 60.h,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 1.h,
+                          width: double.maxFinite,
+                          color: ColorStyles.black,
+                        ),
+                        const Spacer(),
+                        SizedBox(
+                          height: 50.h,
+                          width: double.maxFinite,
+                          child: TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            style: TextButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Закрыть',
+                                style: TextStyle(
+                                  color: ColorStyles.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18.sp,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      const Spacer(),
-                    ],
+                        const Spacer(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
