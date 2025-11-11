@@ -57,6 +57,9 @@ class $AssetsIconsGen {
   SvgGenImage get arrowRight =>
       const SvgGenImage('assets/icons/arrow_right.svg');
 
+  /// File path: assets/icons/blue_check.svg
+  SvgGenImage get blueCheck => const SvgGenImage('assets/icons/blue_check.svg');
+
   /// File path: assets/icons/car_icon.svg
   SvgGenImage get carIcon => const SvgGenImage('assets/icons/car_icon.svg');
 
@@ -125,6 +128,7 @@ class $AssetsIconsGen {
   List<SvgGenImage> get values => [
         activeCircle,
         arrowRight,
+        blueCheck,
         carIcon,
         clock,
         closeIcon,

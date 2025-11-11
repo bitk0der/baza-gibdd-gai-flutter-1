@@ -113,8 +113,8 @@ class CustomTextField extends StatelessWidget {
           prefixIcon: prefixIcon,
           hintStyle: hintStyle ??
               TextStyles.h4.copyWith(
-                color: Colors.black.withValues(alpha: 0.5),
-                fontSize: 16.sp,
+                color: Colors.white.withValues(alpha: 0.4),
+                fontSize: 17.sp,
               ),
         ),
       ),

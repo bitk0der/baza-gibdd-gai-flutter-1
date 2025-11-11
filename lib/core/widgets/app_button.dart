@@ -40,10 +40,10 @@ class AppButton extends StatelessWidget {
       margin: margin,
       height: height == 50 ? null : height,
       decoration: BoxDecoration(
-        color: backgroundColor,
-        border: boxBorder,
-        borderRadius: BorderRadius.circular(borderRadius),
-      ),
+          color: backgroundColor,
+          border: boxBorder,
+          borderRadius: BorderRadius.circular(borderRadius),
+          gradient: LinearGradient(colors: ColorStyles.blueTabBarGradient)),
       duration: standartDuration,
       child: TextButton(
         onPressed: isLoading ? null : onTap,

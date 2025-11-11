@@ -46,12 +46,13 @@ class AppRouter extends RootStackRouter {
               AutoRoute(page: HomeRoute.page, path: ''),
               AutoRoute(page: AppWebViewPage.page, path: 'app_webview'),
               AutoRoute(page: FillDataRoute.page, path: 'fill_data_route'),
+              AutoRoute(page: CheckoutRoute.page, path: 'checkout_route'),
             ],
           ),
           AutoRoute(
             page: FinesRouter.page,
             path: 'fines',
-            children: [AutoRoute(page: PaymentsRoute.page, path: '')],
+            children: [AutoRoute(page: FinePaymentRoute.page, path: '')],
           ),
           AutoRoute(
             page: ChatRouter.page,

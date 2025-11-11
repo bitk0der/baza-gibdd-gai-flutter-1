@@ -5,12 +5,14 @@ import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/theme/app_fonts.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_button.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_card_layout.dart';
+import 'package:baza_gibdd_gai/core/widgets/app_custom_scaffold.dart';
 import 'package:baza_gibdd_gai/core/widgets/custom_app_bar.dart';
 import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/widgets/custom_textfield.dart';
 import 'package:baza_gibdd_gai/features/credit_rating/data/models/product_model.dart';
 import 'package:baza_gibdd_gai/features/credit_rating/data/models/request_payment_body.dart';
 import 'package:baza_gibdd_gai/features/credit_rating/presentation/blocs/credit_rating_cubit.dart';
 import 'package:baza_gibdd_gai/gen/assets.gen.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,11 +54,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorStyles.fillColor,
+    return AppCustomScaffold(
       appBar: CustomAppBar.getAppBar(
         title: 'Оформление заказа',
-        isNeedImage: true,
+        isNeedImage: false,
         isTitleCenter: true,
         onTapBackButton: () => context.maybePop(),
       ),
@@ -66,6 +67,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           children: [
             AppCardLayout(
               isNeedShadow: true,
+              color: ColorStyles.darkGreenGradient.first,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -91,63 +93,74 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
             ),
             SizedBox(height: 12.h),
-            AppCardLayout(
-              isNeedShadow: true,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Детали заказа',
-                    style: TextStyles.h1.copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20.sp,
-                      height: 1.1,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  AppCardLayout(
-                    color: ColorStyles.fillColor,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.w,
-                      vertical: 13.h,
-                    ),
-                    child: Row(
-                      children: [
-                        Flexible(
-                          child: Row(
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  'Кредитный отчет о физическом лице',
-                                  style: TextStyles.h4.copyWith(
-                                    fontSize: 16.sp,
+            DottedBorder(
+                options: RoundedRectDottedBorderOptions(
+                  dashPattern: [4, 4],
+                  strokeWidth: 2,
+                  color: ColorStyles.blue,
+                  radius: Radius.circular(10),
+                ),
+                child: AppCardLayout(
+                  isNeedShadow: true,
+                  radius: 10,
+                  color: ColorStyles.darkGreenGradient.first,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Детали заказа',
+                        style: TextStyles.h1.copyWith(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20.sp,
+                          height: 1.1,
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      AppCardLayout(
+                        color: ColorStyles.fillColor,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 14.w,
+                          vertical: 13.h,
+                        ),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Row(
+                                children: [
+                                  Assets.icons.blueCheck.svg(),
+                                  SizedBox(width: 10),
+                                  Flexible(
+                                    child: Text(
+                                      'Кредитный отчет о физическом лице',
+                                      style: TextStyles.h4.copyWith(
+                                        fontSize: 16.sp,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            Text(
+                              '${widget.availableProduct.price ~/ 100} ₽',
+                              style: TextStyles.h2.copyWith(
+                                fontSize: 17.sp,
+                                color: ColorStyles.green,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          '${widget.availableProduct.price ~/ 100} ₽',
-                          style: TextStyles.h2.copyWith(
-                            fontSize: 17.sp,
-                            color: ColorStyles.blue,
-                          ),
+                      ),
+                      SizedBox(height: 8.h),
+                      for (int i = 0; i < checkoutTitles.length; i++)
+                        infoRow(
+                          checkoutTitles[i],
+                          i == 0
+                              ? '${widget.serviceParams[0]} ${widget.serviceParams[1]} ${widget.serviceParams[2]}'
+                              : widget.serviceParams[i + 2],
                         ),
-                      ],
-                    ),
+                    ],
                   ),
-                  SizedBox(height: 8.h),
-                  for (int i = 0; i < checkoutTitles.length; i++)
-                    infoRow(
-                      checkoutTitles[i],
-                      i == 0
-                          ? '${widget.serviceParams[0]} ${widget.serviceParams[1]} ${widget.serviceParams[2]}'
-                          : widget.serviceParams[i + 2],
-                    ),
-                ],
-              ),
-            ),
+                )),
             BlocConsumer(
               bloc: creditRatingCubit,
               listener: (context, state) {
@@ -168,7 +181,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
               builder: (context, state) => Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: AppButton(
-                  backgroundColor: ColorStyles.blue,
                   isLoading: state is CreditRatingPaymentLoadingState,
                   onTap: () {
                     if (infoGlobalKey.currentState!.validate()) {
@@ -215,7 +227,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             title,
             style: TextStyles.h4.copyWith(
               fontSize: 14.sp,
-              color: Colors.black.withValues(alpha: 0.5),
+              color: Colors.white.withValues(alpha: 0.5),
             ),
           ),
           Text(value, style: TextStyles.h4),

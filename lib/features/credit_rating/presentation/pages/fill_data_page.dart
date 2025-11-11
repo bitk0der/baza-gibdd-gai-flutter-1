@@ -5,6 +5,7 @@ import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/theme/app_fonts.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_button.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_card_layout.dart';
+import 'package:baza_gibdd_gai/core/widgets/app_custom_scaffold.dart';
 import 'package:baza_gibdd_gai/core/widgets/custom_app_bar.dart';
 import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/widgets/custom_textfield.dart';
 import 'package:baza_gibdd_gai/features/credit_rating/presentation/blocs/credit_rating_cubit.dart';
@@ -14,7 +15,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:baza_gibdd_gai/gen/assets.gen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @RoutePage()
@@ -87,36 +87,33 @@ class _FillDataPageState extends State<FillDataPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorStyles.fillColor,
-      appBar: CustomAppBar.getAppBar(
-        title: 'Заполните данные',
-        isTitleCenter: true,
-        isNeedImage: true,
-        onTapBackButton: () => context.maybePop(),
-      ),
-      body: BlocConsumer(
-        bloc: creditRatingCubit,
-        listener: (context, state) {},
-        builder: (context, state) => creditRatingCubit.productModel == null
-            ? Center(
-                child: SizedBox(
-                  width: 48,
-                  height: 48,
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : ListView(
-                controller: _scrollController,
-                padding: EdgeInsets.all(16),
-                children: [
-                  Form(
-                    key: infoGlobalKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppCardLayout(
-                          color: ColorStyles.invoiceStatusRed,
+    return AppCustomScaffold(
+        appBar: CustomAppBar.getAppBar(
+          title: 'Заполните данные',
+          isTitleCenter: true,
+          isNeedImage: false,
+          onTapBackButton: () => context.maybePop(),
+        ),
+        body: BlocConsumer(
+          bloc: creditRatingCubit,
+          listener: (context, state) {},
+          builder: (context, state) => creditRatingCubit.productModel == null
+              ? Center(
+                  child: SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              : ListView(
+                  padding: EdgeInsets.zero,
+                  controller: _scrollController,
+                  children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
+                        child: AppCardLayout(
+                          color: ColorStyles.darkOrange,
                           width: double.infinity,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -125,177 +122,210 @@ class _FillDataPageState extends State<FillDataPage> {
                                 '* ',
                                 style: TextStyles.h4.copyWith(
                                   fontSize: 14.sp,
-                                  color: Colors.red,
+                                  color: Colors.orange,
                                 ),
                               ),
                               Text(
                                 '— обязательные поля для заполнения',
                                 style: TextStyles.h4.copyWith(
                                   fontSize: 14.sp,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   height: 1.1,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: 16.h),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (c, index) {
-                            var field = creditRatingCubit.productModel!
-                                .availableProduct!.serviceParams.fields.entries
-                                .toList()[index]
-                                .value;
-                            _kOptions.clear();
-                            for (var region in creditRatingCubit.regions) {
-                              _kOptions.add(region.name);
-                            }
-
-                            return textFieldWithTitle(
-                              title: field.title,
-                              key: _infoFieldKeys[index],
-                              focusNode: infoFocusNodes[index],
-                              isNeedAutoComplete: index == 4,
-                              hintText: infoHintsFirstTabSecondPage[index],
-                              inputFormatters: index == 3
-                                  ? [
-                                      MaskTextInputFormatter(
-                                        mask: "##.##.####",
-                                      ),
-                                      FilteringTextInputFormatter.deny(
-                                        RegExp(r'\s+$'),
-                                      ),
-                                    ]
-                                  : [
-                                      FilteringTextInputFormatter.deny(
-                                        RegExp(r'\s+$'),
-                                      ),
-                                    ],
-                              validator: index == 0 || index == 1
-                                  ? getSimpleValidator(field.regexp)
-                                  : index == 3
-                                      ? getValidator(field.regexp, 2)
-                                      : null,
-                              isRequired: field.required,
-                              keyboardType: index == 3
-                                  ? TextInputType.number
-                                  : TextInputType.name,
-                              controller: infoControllers[index],
-                            );
-                          },
-                          separatorBuilder: (c, index) =>
-                              SizedBox(height: 13.h),
-                          itemCount: 5,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 14.h),
-                  AppCardLayout(
-                    color: ColorStyles.lightOrange,
-                    width: double.infinity,
-                    padding: EdgeInsets.all(12),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Assets.icons.warning.svg(),
-                        SizedBox(width: 10),
-                        Flexible(
-                          child: Column(
-                            children: [
-                              Text(
-                                'Для получения кредитного рейтинга в БКИ необходимы паспортные данные',
-                                style: TextStyles.h4.copyWith(
-                                  fontSize: 14.sp,
-                                  color: Colors.black,
-                                  height: 1.1,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                'Персональные данные не разглашаются и не передаются третьим лицам',
-                                style: TextStyles.h4.copyWith(
-                                  fontSize: 13.sp,
-                                  color: Colors.black.withValues(alpha: 0.7),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 14.h),
-                  SafeArea(
-                    child: Form(
-                      key: documentsGlobalKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ListView.separated(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.zero,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (c, index) {
-                              var field = creditRatingCubit
-                                  .productModel!
-                                  .availableProduct!
-                                  .serviceParams
-                                  .fields
-                                  .entries
-                                  .skip(5)
-                                  .toList()[index]
-                                  .value;
-                              return textFieldWithTitle(
-                                title: field.title,
-                                key: _documentsFieldKeys[index],
-                                focusNode: documentsFocusNodes[index],
-                                hintText:
-                                    documentsHintsFirstTabSecondPage[index],
-                                inputFormatters: [
-                                  formatters[index],
-                                  FilteringTextInputFormatter.deny(
-                                    RegExp(r'\s+$'),
-                                  ),
-                                ],
-                                isRequired: field.required,
-                                keyboardType: TextInputType.number,
-                                validator: getValidator(field.regexp, index),
-                                controller: documentsControllers[index],
-                              );
-                            },
-                            separatorBuilder: (c, index) =>
-                                SizedBox(height: 13.h),
-                            itemCount: creditRatingCubit.productModel!
-                                .availableProduct!.serviceParams.fields.entries
-                                .toList()
-                                .skip(5)
-                                .length,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: AppButton(
-                              backgroundColor: ColorStyles.blue,
-                              isLoading:
-                                  state is CreditRatingPaymentLoadingState,
-                              onTap: () => setState(() {
-                                _validateAndFocus();
-                              }),
-                              title: 'Продолжить',
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
-                  ),
-                ],
-              ),
-      ),
-    );
+                      Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: AppCardLayout(
+                              color: ColorStyles.darkGreenGradient.first,
+                              child: Column(
+                                children: [
+                                  Form(
+                                      key: infoGlobalKey,
+                                      child: ListView.separated(
+                                        shrinkWrap: true,
+                                        padding: EdgeInsets.zero,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (c, index) {
+                                          var field = creditRatingCubit
+                                              .productModel!
+                                              .availableProduct!
+                                              .serviceParams
+                                              .fields
+                                              .entries
+                                              .toList()[index]
+                                              .value;
+                                          _kOptions.clear();
+                                          for (var region
+                                              in creditRatingCubit.regions) {
+                                            _kOptions.add(region.name);
+                                          }
+
+                                          return textFieldWithTitle(
+                                            title: field.title,
+                                            key: _infoFieldKeys[index],
+                                            focusNode: infoFocusNodes[index],
+                                            isNeedAutoComplete: index == 4,
+                                            hintText:
+                                                infoHintsFirstTabSecondPage[
+                                                    index],
+                                            inputFormatters: index == 3
+                                                ? [
+                                                    MaskTextInputFormatter(
+                                                      mask: "##.##.####",
+                                                    ),
+                                                    FilteringTextInputFormatter
+                                                        .deny(
+                                                      RegExp(r'\s+$'),
+                                                    ),
+                                                  ]
+                                                : [
+                                                    FilteringTextInputFormatter
+                                                        .deny(
+                                                      RegExp(r'\s+$'),
+                                                    ),
+                                                  ],
+                                            validator: index == 0 || index == 1
+                                                ? getSimpleValidator(
+                                                    field.regexp)
+                                                : index == 3
+                                                    ? getValidator(
+                                                        field.regexp, 2)
+                                                    : null,
+                                            isRequired: field.required,
+                                            keyboardType: index == 3
+                                                ? TextInputType.number
+                                                : TextInputType.name,
+                                            controller: infoControllers[index],
+                                          );
+                                        },
+                                        separatorBuilder: (c, index) =>
+                                            SizedBox(height: 13.h),
+                                        itemCount: 5,
+                                      )),
+                                  SizedBox(height: 14.h),
+                                  Form(
+                                    key: documentsGlobalKey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ListView.separated(
+                                          shrinkWrap: true,
+                                          padding: EdgeInsets.zero,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemBuilder: (c, index) {
+                                            var field = creditRatingCubit
+                                                .productModel!
+                                                .availableProduct!
+                                                .serviceParams
+                                                .fields
+                                                .entries
+                                                .skip(5)
+                                                .toList()[index]
+                                                .value;
+                                            return textFieldWithTitle(
+                                              title: field.title,
+                                              key: _documentsFieldKeys[index],
+                                              focusNode:
+                                                  documentsFocusNodes[index],
+                                              hintText:
+                                                  documentsHintsFirstTabSecondPage[
+                                                      index],
+                                              inputFormatters: [
+                                                formatters[index],
+                                                FilteringTextInputFormatter
+                                                    .deny(
+                                                  RegExp(r'\s+$'),
+                                                ),
+                                              ],
+                                              isRequired: field.required,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              validator: getValidator(
+                                                  field.regexp, index),
+                                              controller:
+                                                  documentsControllers[index],
+                                            );
+                                          },
+                                          separatorBuilder: (c, index) =>
+                                              SizedBox(height: 13.h),
+                                          itemCount: creditRatingCubit
+                                              .productModel!
+                                              .availableProduct!
+                                              .serviceParams
+                                              .fields
+                                              .entries
+                                              .toList()
+                                              .skip(5)
+                                              .length,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ))),
+                      SizedBox(height: 20),
+                      SafeArea(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: ColorStyles.blueTabBarGradient),
+                              borderRadius: BorderRadius.circular(14)),
+                          child: AppButton(
+                            backgroundColor: Colors.transparent,
+                            isLoading: state is CreditRatingPaymentLoadingState,
+                            onTap: () => setState(() {
+                              _validateAndFocus();
+                            }),
+                            title: 'Продолжить',
+                          ),
+                        ),
+                      ),
+                      /* SizedBox(height: 14.h),
+                              AppCardLayout(
+                                color: ColorStyles.orange,
+                                width: double.infinity,
+                                padding: EdgeInsets.all(12),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Assets.icons.warning.svg(),
+                                    SizedBox(width: 10),
+                                    Flexible(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Для получения кредитного рейтинга в БКИ необходимы паспортные данные',
+                                            style: TextStyles.h4.copyWith(
+                                              fontSize: 14.sp,
+                                              color: Colors.black,
+                                              height: 1.1,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          SizedBox(height: 4),
+                                          Text(
+                                            'Персональные данные не разглашаются и не передаются третьим лицам',
+                                            style: TextStyles.h4.copyWith(
+                                              fontSize: 13.sp,
+                                              color: Colors.black.withValues(alpha: 0.7),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ), */
+                    ]),
+        ));
   }
 
   AppButton checkButton() {
@@ -333,7 +363,7 @@ class _FillDataPageState extends State<FillDataPage> {
           children: [
             Text(title, style: TextStyles.h4),
             if (isRequired)
-              Text('*', style: TextStyles.h4.copyWith(color: Colors.red)),
+              Text('*', style: TextStyles.h4.copyWith(color: Colors.orange)),
           ],
         ),
         SizedBox(height: 6.h),
@@ -369,7 +399,12 @@ class _FillDataPageState extends State<FillDataPage> {
                     key: ValueKey(key.hashCode),
                     hintText: hintText,
                     focusNode: focusNode1,
-                    fillColor: Colors.white,
+                    textStyle: TextStyles.h2.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.w400),
+                    hintStyle: TextStyles.h2.copyWith(
+                        color: Colors.white.withValues(alpha: 0.4),
+                        fontWeight: FontWeight.w400),
+                    fillColor: ColorStyles.fillColor,
                     keyboardType: keyboardType,
                     controller: textEditingController,
                     onChanged: (p0) => controller.text = '',
@@ -388,9 +423,14 @@ class _FillDataPageState extends State<FillDataPage> {
                   key: ValueKey(key.hashCode),
                   focusNode: focusNode,
                   hintText: hintText,
-                  fillColor: Colors.white,
+                  fillColor: ColorStyles.fillColor,
                   keyboardType: keyboardType,
                   controller: controller,
+                  textStyle: TextStyles.h2.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.w400),
+                  hintStyle: TextStyles.h2.copyWith(
+                      color: Colors.white.withValues(alpha: 0.4),
+                      fontWeight: FontWeight.w400),
                   inputFormatters: inputFormatters,
                   validator: validator,
                 ),

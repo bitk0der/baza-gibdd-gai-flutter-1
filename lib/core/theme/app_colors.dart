@@ -9,7 +9,8 @@ class ColorStyles {
   static const Color cardBlue = Color(0xff4B495C);
   static const Color orange = Color(0xffFFA800);
   static const Color lightOrange = Color(0xffFFD600);
-  static const Color green = Color(0xff2EA36E);
+  static const Color darkOrange = Color(0xff594828);
+  static const Color green = Color(0xff62FA6C);
   static const Color blue = Color(0xff1E80FF);
   static const Color blueCardColor = Color(0xff234B7D);
   static const Color lightBlueCardColor = Color(0xff9DD3F9);

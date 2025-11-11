@@ -79,7 +79,7 @@ class CustomAppBar {
     required String title,
   }) {
     return PreferredSize(
-      preferredSize: Size.fromHeight(kToolbarHeight + 15.h),
+      preferredSize: Size.fromHeight(kToolbarHeight + 25.h),
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -118,13 +118,15 @@ class CustomAppBar {
                       children: [
                         if (isBackButton) ...[
                           AppCircleButton(
-                            buttonSize: 30,
+                            buttonSize: 40,
                             onTap: onTapBackButton,
-                            padding: 7,
+                            padding: 10,
                             radius: 8,
-                            icon: Assets.icons.arrowRight,
-                            backgroundColor: Colors.white,
-                            iconColor: Colors.black,
+                            quarterTurns: 2,
+                            icon: Assets.icons.twoArrows,
+                            backgroundColor:
+                                Colors.white.withValues(alpha: 0.1),
+                            iconColor: Colors.white,
                           ),
                           if (!isTitleCenter) SizedBox(width: 16.w),
                         ],
