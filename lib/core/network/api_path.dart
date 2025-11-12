@@ -14,7 +14,7 @@ class ApiPath {
 
   static const appMetrikaConfigKey = '';
 
-  static paymentScreenUrl(String yin) {
+  static String paymentScreenUrl(String yin) {
     if (yin.startsWith('182')) {
       return '$baseUrl/migrantreestr/plategi/sendnalogppurl.php?uin=$yin';
     } else {

@@ -70,10 +70,10 @@ class AppRouter extends RootStackRouter {
             page: MyReportsRouter.page,
             path: 'my_reports',
             children: [
-              AutoRoute(page: CreditRatingMainRoute.page, path: ''),
+              /* AutoRoute(page: CreditRatingMainRoute.page, path: ''), */
               AutoRoute(
                 page: CreditRatingMainOldRoute.page,
-                path: 'credit_rating_main_page_old',
+                path: '',
               ),
               AutoRoute(page: CheckoutRoute.page, path: 'checkout_route'),
               AutoRoute(page: FillDataRoute.page, path: 'fill_data_route'),

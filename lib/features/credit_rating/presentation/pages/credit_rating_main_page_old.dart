@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:baza_gibdd_gai/core/widgets/app_custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:baza_gibdd_gai/core/constants/constants.dart';
-import 'package:baza_gibdd_gai/core/routes/app_router.dart';
 import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/theme/app_fonts.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_button.dart';
@@ -31,14 +30,6 @@ class CreditRatingMainOldPage extends StatefulWidget {
 class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
     with TickerProviderStateMixin {
   late TabController tabController;
-  late List<TextEditingController> infoControllers;
-  late List<TextEditingController> documentsControllers;
-
-  late List<FocusNode> documentsFocusNodes;
-  late List<FocusNode> infoFocusNodes;
-
-  final Map<int, GlobalKey> _infoFieldKeys = {};
-  final Map<int, GlobalKey> _documentsFieldKeys = {};
 
   CreditRatingCubit creditRatingCubit = GetIt.I<CreditRatingCubit>();
   TextEditingController emailController = TextEditingController();
@@ -46,42 +37,25 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
-
     creditRatingCubit.getCart();
-
-    infoControllers = List.generate(5, (index) => TextEditingController());
-    documentsControllers = List.generate(4, (index) => TextEditingController());
-
-    infoFocusNodes = List.generate(5, (index) => FocusNode());
-    documentsFocusNodes = List.generate(4, (index) => FocusNode());
-
     emailController.text =
         GetIt.I<SharedPreferences>().getString('userEmail') ?? '';
-    for (int i = 0; i < infoControllers.length; i++) {
-      _infoFieldKeys[i] = GlobalKey();
-    }
-    for (int i = 0; i < documentsControllers.length; i++) {
-      _documentsFieldKeys[i] = GlobalKey();
-    }
 
     super.initState();
   }
 
-  final ScrollController _scrollController = ScrollController();
   bool firstTabFirstPage = true;
   bool secondTabFirstPage = true;
 
-  final infoGlobalKey = GlobalKey<FormState>();
+  final emailGibddGlobalKey = GlobalKey<FormState>();
   final emailGlobalKey = GlobalKey<FormState>();
-  final documentsGlobalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorStyles.fillColor,
+    return AppCustomScaffold(
       appBar: CustomAppBar.getAppBar(
-        title: 'Заполните данные',
-        isBackButton: true,
+        title: 'Мои отчеты',
+        isBackButton: false,
         isTitleCenter: true,
         onTapBackButton: () => context.maybePop(),
       ),
@@ -90,10 +64,11 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
           Padding(
             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
             child: Container(
-              padding: EdgeInsets.all(3),
+              padding: EdgeInsets.all(4),
               decoration: BoxDecoration(
-                color: Colors.white,
+                border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
                 borderRadius: BorderRadius.circular(10),
+                color: ColorStyles.backgroundViolet,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.1),
@@ -126,14 +101,16 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),
-                  unselectedLabelStyle: TextStyles.h4,
+                  unselectedLabelStyle: TextStyles.h4
+                      .copyWith(color: Colors.white.withValues(alpha: 0.5)),
                   indicator: BoxDecoration(
-                    color: ColorStyles.blue,
+                    gradient:
+                        LinearGradient(colors: ColorStyles.blueTabBarGradient),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   tabs: [
-                    Tab(text: 'Новая проверка'),
-                    Tab(text: 'Мои отчеты'),
+                    Tab(text: 'Проверка авто'),
+                    Tab(text: 'Проверка физлица'),
                   ],
                 ),
               ),
@@ -143,8 +120,10 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
             child: TabBarView(
               controller: tabController,
               children: [
-                firstTabSecondPage(),
-                secondTabFirstPage ? secondTab() : secondTabSecondPage(),
+                firstTabFirstPage ? secondTab(true) : secondTabSecondPage(true),
+                secondTabFirstPage
+                    ? secondTab(false)
+                    : secondTabSecondPage(false),
               ],
             ),
           ),
@@ -158,279 +137,9 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
     'bobcat',
     'chameleon',
   ];
-  Container firstTabSecondPage() => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        color: ColorStyles.fillColor,
-        child: BlocConsumer(
-          bloc: creditRatingCubit,
-          listener: (context, state) {},
-          builder: (context, state) => creditRatingCubit.productModel == null
-              ? Center(
-                  child: SizedBox(
-                    width: 48,
-                    height: 48,
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : ListView(
-                  controller: _scrollController,
-                  children: [
-                    Form(
-                      key: infoGlobalKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppCardLayout(
-                            color: ColorStyles.invoiceStatusRed,
-                            width: double.infinity,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '* ',
-                                  style: TextStyles.h4.copyWith(
-                                    fontSize: 14.sp,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                Text(
-                                  '— обязательные поля для заполнения',
-                                  style: TextStyles.h4.copyWith(
-                                    fontSize: 14.sp,
-                                    color: Colors.black,
-                                    height: 1.1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 13.h),
-                          ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (c, index) {
-                              var field = creditRatingCubit
-                                  .productModel!
-                                  .availableProduct!
-                                  .serviceParams
-                                  .fields
-                                  .entries
-                                  .toList()[index]
-                                  .value;
-                              _kOptions.clear();
-                              for (var region in creditRatingCubit.regions) {
-                                _kOptions.add(region.name);
-                              }
 
-                              return textFieldWithTitle(
-                                title: field.title,
-                                key: _infoFieldKeys[index],
-                                focusNode: infoFocusNodes[index],
-                                isNeedAutoComplete: index == 4,
-                                hintText: infoHintsFirstTabSecondPage[index],
-                                inputFormatters: index == 3
-                                    ? [
-                                        MaskTextInputFormatter(
-                                            mask: "##.##.####"),
-                                        FilteringTextInputFormatter.deny(
-                                          RegExp(r'\s+$'),
-                                        ),
-                                      ]
-                                    : [
-                                        FilteringTextInputFormatter.deny(
-                                          RegExp(r'\s+$'),
-                                        ),
-                                      ],
-                                validator: index == 0 || index == 1
-                                    ? getSimpleValidator(field.regexp)
-                                    : index == 3
-                                        ? getValidator(field.regexp, 2)
-                                        : null,
-                                isRequired: field.required,
-                                keyboardType: index == 3
-                                    ? TextInputType.number
-                                    : TextInputType.name,
-                                controller: infoControllers[index],
-                              );
-                            },
-                            separatorBuilder: (c, index) =>
-                                SizedBox(height: 13.h),
-                            itemCount: 5,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 12.h),
-                    Form(
-                      key: documentsGlobalKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppCardLayout(
-                            color: ColorStyles.lightOrange,
-                            width: double.infinity,
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Assets.icons.warning.svg(),
-                                SizedBox(width: 10),
-                                Flexible(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'Для получения кредитного рейтинга в БКИ необходимы паспортные данные',
-                                        style: TextStyles.h4.copyWith(
-                                          fontSize: 14.sp,
-                                          color: Colors.black,
-                                          height: 1.1,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        'Персональные данные не разглашаются и не передаются третьим лицам',
-                                        style: TextStyles.h4.copyWith(
-                                          fontSize: 13.sp,
-                                          color: Colors.black.withValues(
-                                            alpha: 0.7,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 13.h),
-                          ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (c, index) {
-                              var field = creditRatingCubit
-                                  .productModel!
-                                  .availableProduct!
-                                  .serviceParams
-                                  .fields
-                                  .entries
-                                  .skip(5)
-                                  .toList()[index]
-                                  .value;
-                              return textFieldWithTitle(
-                                title: field.title,
-                                key: _documentsFieldKeys[index],
-                                focusNode: documentsFocusNodes[index],
-                                hintText:
-                                    documentsHintsFirstTabSecondPage[index],
-                                inputFormatters: [
-                                  formatters[index],
-                                  FilteringTextInputFormatter.deny(
-                                      RegExp(r'\s+$')),
-                                ],
-                                isRequired: field.required,
-                                keyboardType: TextInputType.number,
-                                validator: getValidator(field.regexp, index),
-                                controller: documentsControllers[index],
-                              );
-                            },
-                            separatorBuilder: (c, index) =>
-                                SizedBox(height: 13.h),
-                            itemCount: creditRatingCubit.productModel!
-                                .availableProduct!.serviceParams.fields.entries
-                                .toList()
-                                .skip(5)
-                                .length,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: AppButton(
-                        backgroundColor: ColorStyles.blue,
-                        isLoading: state is CreditRatingPaymentLoadingState,
-                        onTap: () => setState(() {
-                          _validateAndFocus();
-                        }),
-                        title: 'Продолжить',
-                      ),
-                    ),
-                  ],
-                ),
-        ),
-      );
-
-  Future<void> _scrollToField(GlobalKey key, FocusNode focusNode) async {
-    final context = key.currentContext;
-    if (context != null) {
-      await Scrollable.ensureVisible(
-        context,
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
-      );
-      FocusScope.of(context).requestFocus(focusNode);
-    }
-  }
-
-  void _validateAndFocus() {
-    bool isForm1Valid = infoGlobalKey.currentState?.validate() ?? false;
-    bool isForm2Valid = documentsGlobalKey.currentState?.validate() ?? false;
-
-    if (isForm1Valid && isForm2Valid) {
-      List<String> serviceParams = [];
-      for (var controller in infoControllers) {
-        serviceParams.add(controller.text);
-      }
-      for (var controller in documentsControllers) {
-        serviceParams.add(controller.text);
-      }
-      context.router.push(
-        CheckoutRoute(
-          serviceParams: serviceParams,
-          availableProduct: creditRatingCubit.productModel!.availableProduct!,
-        ),
-      );
-    } else {
-      for (int i = 0; i < infoControllers.length; i++) {
-        var field = creditRatingCubit
-            .productModel!.availableProduct!.serviceParams.fields.entries
-            .toList()[i]
-            .value;
-
-        var validator = i == 0 || i == 1
-            ? getSimpleValidator(field.regexp)
-            : i == 3
-                ? getValidator(field.regexp, 2)
-                : i == 4
-                    ? (value) {
-                        return value.isEmpty
-                            ? 'Выберите регион из списка'
-                            : null;
-                      }
-                    : null;
-        if (validator != null && validator(infoControllers[i].text) != null) {
-          _scrollToField(_infoFieldKeys[i]!, infoFocusNodes[i]);
-          return;
-        }
-      }
-      for (int i = 0; i < documentsControllers.length; i++) {
-        var field = creditRatingCubit
-            .productModel!.availableProduct!.serviceParams.fields.entries
-            .skip(5)
-            .toList()[i]
-            .value;
-        var validator = getValidator(field.regexp, i);
-        if (validator(documentsControllers[i].text) != null) {
-          _scrollToField(_documentsFieldKeys[i]!, documentsFocusNodes[i]);
-          return;
-        }
-      }
-    }
-  }
-
-  BlocConsumer<CreditRatingCubit, CreditRatingState> secondTabSecondPage() {
+  BlocConsumer<CreditRatingCubit, CreditRatingState> secondTabSecondPage(
+      bool isGibdd) {
     return BlocConsumer(
       bloc: creditRatingCubit,
       listener: (c, state) {
@@ -453,97 +162,102 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
           return Stack(
             children: [
               Scaffold(
-                backgroundColor: ColorStyles.fillColor,
+                backgroundColor: Colors.transparent,
                 body: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppCardLayout(
-                        isNeedShadow: true,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (orders.isEmpty) ...[
-                              Text(
-                                'Укажите электронный адрес для получения отчета',
-                                style: TextStyles.h1.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20.sp,
-                                  height: 1.1,
+                  child: SafeArea(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppCardLayout(
+                          isNeedShadow: true,
+                          color: ColorStyles.darkGreenGradient.first,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (orders.isEmpty) ...[
+                                Text(
+                                  'Укажите электронный адрес для получения отчета',
+                                  style: TextStyles.h1.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20.sp,
+                                    height: 1.1,
+                                  ),
+                                ),
+                                SizedBox(height: 13.h),
+                              ],
+                              Form(
+                                key: isGibdd
+                                    ? emailGibddGlobalKey
+                                    : emailGlobalKey,
+                                child: textFieldWithTitle(
+                                  title: 'E-mail:',
+                                  focusNode: FocusNode(),
+                                  validator: validateEmail(),
+                                  hintText: 'example@mail.ru',
+                                  fillColor: ColorStyles.fillColor,
+                                  controller: emailController,
                                 ),
                               ),
-                              SizedBox(height: 13.h),
+                              if (orders.isNotEmpty) ...[
+                                SizedBox(height: 8.h),
+                                checkButton(isGibdd),
+                              ],
                             ],
-                            Form(
-                              key: emailGlobalKey,
-                              child: textFieldWithTitle(
-                                title: 'E-mail:',
-                                focusNode: FocusNode(),
-                                validator: validateEmail(),
-                                hintText: 'example@mail.ru',
-                                fillColor: ColorStyles.fillColor,
-                                controller: emailController,
+                          ),
+                        ),
+                        SizedBox(height: 12.h),
+                        CustomTextField(
+                          hintText: 'Поиск...',
+                          fillColor: ColorStyles.fillColor,
+                          controller: searchController,
+                          keyboardType: TextInputType.text,
+                          onChanged: (p0) {
+                            setState(() {});
+                          },
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 11,
+                            ).copyWith(right: 12),
+                            child: Assets.icons.search.svg(
+                              colorFilter: ColorFilter.mode(
+                                Colors.black26,
+                                BlendMode.srcIn,
                               ),
                             ),
-                            if (orders.isNotEmpty) ...[
-                              SizedBox(height: 8.h),
-                              checkButton(),
-                            ],
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 12.h),
-                      CustomTextField(
-                        hintText: 'Поиск...',
-                        fillColor: Colors.white,
-                        controller: searchController,
-                        keyboardType: TextInputType.text,
-                        onChanged: (p0) {
-                          setState(() {});
-                        },
-                        prefixIcon: Padding(
+                          ),
                           padding: EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 11,
-                          ).copyWith(right: 12),
-                          child: Assets.icons.search.svg(
-                            colorFilter: ColorFilter.mode(
-                              Colors.black26,
-                              BlendMode.srcIn,
-                            ),
                           ),
                         ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 11,
-                        ),
-                      ),
-                      filteredOrders.isEmpty
-                          ? Container(
-                              padding: EdgeInsets.all(20),
-                              child: Text(
-                                'По вашим параметрам отчетов не найдено',
-                                style: TextStyles.h1,
-                                textAlign: TextAlign.center,
+                        filteredOrders.isEmpty
+                            ? Container(
+                                padding: EdgeInsets.all(20),
+                                child: Text(
+                                  'По вашим параметрам отчетов не найдено',
+                                  style: TextStyles.h1,
+                                  textAlign: TextAlign.center,
+                                ),
+                              )
+                            : ListView.separated(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (c, index) {
+                                  var report = OrderToUserReportMapper.map(
+                                    filteredOrders[index],
+                                  );
+                                  return ReportWidget(report: report);
+                                },
+                                separatorBuilder: (c, index) =>
+                                    SizedBox(height: 12.h),
+                                itemCount: filteredOrders.length,
                               ),
-                            )
-                          : ListView.separated(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.symmetric(vertical: 20),
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (c, index) {
-                                var report = OrderToUserReportMapper.map(
-                                  filteredOrders[index],
-                                );
-                                return ReportWidget(report: report);
-                              },
-                              separatorBuilder: (c, index) =>
-                                  SizedBox(height: 12.h),
-                              itemCount: filteredOrders.length,
-                            ),
-                      SizedBox(height: 70.h),
-                    ],
+                        SizedBox(height: 70.h),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -552,7 +266,7 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
                   bottom: 10,
                   left: 20,
                   right: 20,
-                  child: checkButton(),
+                  child: checkButton(isGibdd),
                 ),
             ],
           );
@@ -569,16 +283,25 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
     );
   }
 
-  AppButton checkButton() {
+  AppButton checkButton(bool isGibdd) {
     return AppButton(
       onTap: () async {
-        if (emailGlobalKey.currentState!.validate()) {
+        bool isValid = isGibdd
+            ? emailGibddGlobalKey.currentState!.validate()
+            : emailGlobalKey.currentState!.validate();
+
+        if (isValid) {
           await GetIt.I<SharedPreferences>().setString(
             'userEmail',
             emailController.text,
           );
-          creditRatingCubit.getReceivingOrders();
-          secondTabFirstPage = false;
+          if (!isGibdd) {
+            creditRatingCubit.getReceivingOrders();
+            secondTabFirstPage = false;
+          } else {
+            creditRatingCubit.getReceivingOrders();
+            firstTabFirstPage = false;
+          }
           setState(() {});
         }
       },
@@ -587,7 +310,7 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
     );
   }
 
-  Container secondTab() => Container(
+  Container secondTab(bool isGibdd) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SafeArea(
           child: Column(
@@ -595,6 +318,7 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
             children: [
               AppCardLayout(
                 isNeedShadow: true,
+                color: ColorStyles.darkGreenGradient.first,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -608,7 +332,7 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
                     ),
                     SizedBox(height: 14.h),
                     Form(
-                      key: emailGlobalKey,
+                      key: isGibdd ? emailGibddGlobalKey : emailGlobalKey,
                       child: textFieldWithTitle(
                         title: 'E-mail:',
                         fillColor: ColorStyles.fillColor,
@@ -621,13 +345,22 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
                     SizedBox(height: 14.h),
                     AppButton(
                       onTap: () async {
-                        if (emailGlobalKey.currentState!.validate()) {
+                        bool isValid = isGibdd
+                            ? emailGibddGlobalKey.currentState!.validate()
+                            : emailGlobalKey.currentState!.validate();
+
+                        if (isValid) {
                           await GetIt.I<SharedPreferences>().setString(
                             'userEmail',
                             emailController.text,
                           );
-                          creditRatingCubit.getReceivingOrders();
-                          secondTabFirstPage = false;
+                          if (!isGibdd) {
+                            creditRatingCubit.getReceivingOrders();
+                            secondTabFirstPage = false;
+                          } else {
+                            creditRatingCubit.getReceivingOrders();
+                            firstTabFirstPage = false;
+                          }
                           setState(() {});
                         }
                       },
@@ -697,6 +430,7 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
                     key: ValueKey(key.hashCode),
                     hintText: hintText,
                     focusNode: focusNode1,
+                    textStyle: TextStyles.h3,
                     fillColor: fillColor,
                     keyboardType: keyboardType,
                     controller: textEditingController,
@@ -718,6 +452,7 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
                   hintText: hintText,
                   fillColor: fillColor,
                   keyboardType: keyboardType,
+                  textStyle: TextStyles.h3,
                   controller: controller,
                   inputFormatters: inputFormatters,
                   validator: validator,
@@ -729,20 +464,6 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
 
   @override
   void dispose() {
-    _scrollController.dispose();
-    for (var node in infoFocusNodes) {
-      node.dispose();
-    }
-    for (var controller in infoControllers) {
-      controller.dispose();
-    }
-
-    for (var node in documentsFocusNodes) {
-      node.dispose();
-    }
-    for (var controller in documentsControllers) {
-      controller.dispose();
-    }
     super.dispose();
   }
 }

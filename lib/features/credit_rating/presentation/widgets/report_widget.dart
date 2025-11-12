@@ -19,6 +19,10 @@ class ReportWidget extends StatelessWidget {
     var map = report.toJson();
     return AppCardLayout(
       radius: 12,
+      padding: EdgeInsets.all(14.w),
+      gradient: ColorStyles.cardGradient,
+      beginAlignment: Alignment.topRight,
+      endAlignment: Alignment.bottomLeft,
       isNeedShadow: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,16 +33,17 @@ class ReportWidget extends StatelessWidget {
               Text(
                 _formatDate(report.reportDate),
                 style: TextStyles.h4.copyWith(
-                  fontSize: 12.sp,
-                  color: Colors.black.withValues(alpha: 0.5),
+                  fontSize: 14.sp,
+                  color: Colors.white.withValues(alpha: 0.7),
                 ),
               ),
             ],
           ),
           SizedBox(height: 10.h),
           Text(
-            report.fullName,
-            style: TextStyles.h1.copyWith(fontSize: 20.sp, height: 1.1),
+            report.fullName.toUpperCase(),
+            style: TextStyles.h1
+                .copyWith(fontSize: 24.sp, height: 1.2, fontFamily: 'Oswald'),
           ),
           SizedBox(height: 8.h),
           Text(
@@ -46,7 +51,7 @@ class ReportWidget extends StatelessWidget {
             style: TextStyles.h4.copyWith(
               fontSize: 14.sp,
               height: 1.1,
-              color: Colors.black.withValues(alpha: 0.7),
+              color: Colors.white.withValues(alpha: 0.7),
             ),
           ),
           SizedBox(height: 10.h),
@@ -60,24 +65,26 @@ class ReportWidget extends StatelessWidget {
             children: [
               Flexible(
                 child: AppCardLayout(
+                  padding: EdgeInsets.all(15),
                   color: report.status == 'Сформирован'
-                      ? Color(0xffBAFFC4)
-                      : Color(0xffD5F4FF),
+                      ? Color(0xff1A4246)
+                      : Color(0xff424123),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       report.status == 'Сформирован'
-                          ? Assets.icons.greenVerified.svg()
+                          ? Assets.icons.greenVerified
+                              .svg(color: Color(0xff45DAFF))
                           : Assets.icons.clock.svg(),
                       SizedBox(width: 6),
-                      Text(
-                        report.status,
-                        textAlign: TextAlign.center,
-                        style: TextStyles.h2.copyWith(
-                          fontSize: 16.sp,
-                          color: report.status == 'Сформирован'
-                              ? Color(0xff417F33)
-                              : ColorStyles.blue,
+                      Flexible(
+                        child: Text(
+                          report.status,
+                          textAlign: TextAlign.center,
+                          style: TextStyles.h3.copyWith(
+                            fontSize: 16.sp,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -123,10 +130,10 @@ class ReportWidget extends StatelessWidget {
               label,
               style: TextStyles.h4.copyWith(
                 fontSize: 14.sp,
-                color: Colors.black.withValues(alpha: 0.5),
+                color: Colors.white.withValues(alpha: 0.6),
               ),
             ),
-            Text(value, style: TextStyles.h4.copyWith(fontSize: 14.sp)),
+            Text(value, style: TextStyles.h4.copyWith(fontSize: 17.sp)),
           ],
         ),
       ),
