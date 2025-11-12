@@ -43,7 +43,7 @@ class AppButton extends StatelessWidget {
           color: backgroundColor ?? ColorStyles.secondaryBlue,
           border: boxBorder,
           borderRadius: BorderRadius.circular(borderRadius),
-          gradient: backgroundColor == ColorStyles.secondaryBlue
+          gradient: backgroundColor != null
               ? null
               : LinearGradient(colors: ColorStyles.blueTabBarGradient)),
       duration: standartDuration,

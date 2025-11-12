@@ -259,6 +259,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         SizedBox(height: 16),
         CustomTextField(
             hintText: hints[index],
+            keyboardType: TextInputType.name,
             onChanged: (v) => setState(() {}),
             textAlign: TextAlign.center,
             padding: EdgeInsets.symmetric(vertical: 17.h),
