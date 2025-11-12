@@ -12,6 +12,7 @@ import 'package:baza_gibdd_gai/features/credit_rating/presentation/pages/credit_
 import 'package:baza_gibdd_gai/features/credit_rating/presentation/pages/fill_data_page.dart';
 import 'package:baza_gibdd_gai/features/credit_rating/presentation/pages/payment_webview.dart';
 import 'package:baza_gibdd_gai/features/local_notifications/data/models/response_message_model.dart';
+import 'package:baza_gibdd_gai/features/local_notifications/presentation/pages/background_notifications_screen.dart';
 import 'package:baza_gibdd_gai/features/local_notifications/presentation/pages/notification_details_page.dart';
 import 'package:baza_gibdd_gai/features/payments/data/models/user_data.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/pages/fine/fine_payment_screen.dart';
@@ -52,7 +53,14 @@ class AppRouter extends RootStackRouter {
           AutoRoute(
             page: FinesRouter.page,
             path: 'fines',
-            children: [AutoRoute(page: FinePaymentRoute.page, path: '')],
+            children: [
+              AutoRoute(page: FinePaymentRoute.page, path: ''),
+              AutoRoute(
+                  page: BackgroundNotificationsRoute.page,
+                  path: 'background_notifications_screen'),
+              AutoRoute(
+                  page: FineSearchRoute.page, path: 'fines_search_screen'),
+            ],
           ),
           AutoRoute(
             page: ChatRouter.page,

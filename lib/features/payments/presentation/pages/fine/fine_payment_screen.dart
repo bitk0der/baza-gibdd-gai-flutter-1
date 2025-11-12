@@ -1,19 +1,19 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:baza_gibdd_gai/core/routes/app_router.dart';
 import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_button.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_card_layout.dart';
+import 'package:baza_gibdd_gai/core/widgets/app_circle_button.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:baza_gibdd_gai/core/utils/check_utils.dart';
 import 'package:baza_gibdd_gai/core/utils/ui_util.dart';
 import 'package:baza_gibdd_gai/core/widgets/custom_app_bar.dart';
 import 'package:baza_gibdd_gai/features/payments/data/models/user_data.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/blocs/user_data_bloc.dart';
-import 'package:baza_gibdd_gai/features/payments/presentation/pages/fine/fine_search_screen.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_snackbar.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_textfield.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/how_to_fill_card.dart';
@@ -49,12 +49,10 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
     keyboardVisibilityController.onChange.listen((visible) {
       setState(() => keyboardVisible = visible);
     });
+    _passportController.text = _bloc.userData.passport ?? '';
+    _vyController.text = _bloc.userData.vy ?? '';
+    _stsController.text = _bloc.userData.sts ?? '';
     super.initState();
-    addPostFrameCallback(() {
-      _passportController.text = _bloc.userData.passport ?? '';
-      _vyController.text = _bloc.userData.vy ?? '';
-      _stsController.text = _bloc.userData.sts ?? '';
-    }, context, UserData.getGibddStrings(_bloc.userData));
   }
 
   @override
@@ -72,8 +70,18 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
       child: AppCustomScaffold(
         key: _scaffoldKey,
         appBar: CustomAppBar.getAppBar(
-          title: 'Проверка штрафов ГИБДД',
+          title: 'Поиск и оплата штрафов ГИБДД',
+          isBackButton: false,
           onTapBackButton: () => context.maybePop(),
+          actions: [
+            AppCircleButton(
+                buttonSize: 40,
+                padding: 9,
+                icon: Assets.icons.bell,
+                backgroundColor: Colors.white.withValues(alpha: 0.1),
+                onTap: () =>
+                    context.router.navigate(BackgroundNotificationsRoute())),
+          ],
         ),
         body: _getBody(),
         floatingActionButton: SafeArea(
@@ -274,19 +282,13 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
             _bloc.add(UserDataBlocSaveEvent(userData));
 
             if (!onlySave) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => FineSearchScreen(
-                          userData: UserData(
-                            passport: _tabIndex == 0
-                                ? _passportController.text
-                                : null,
-                            vy: _tabIndex == 1 ? vy : null,
-                            sts: _tabIndex == 2 ? sts : null,
-                          ),
-                        )),
-              );
+              context.router.navigate(FineSearchRoute(
+                userData: UserData(
+                  passport: _tabIndex == 0 ? _passportController.text : null,
+                  vy: _tabIndex == 1 ? vy : null,
+                  sts: _tabIndex == 2 ? sts : null,
+                ),
+              ));
             }
           }
         }

@@ -76,6 +76,7 @@ addPostFrameCallback(
 Future<bool> showModalFillData(BuildContext context) async =>
     await showModalBottomSheet(
         context: context,
+        useRootNavigator: true,
         builder: (ctx) => Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22),
               decoration: const BoxDecoration(

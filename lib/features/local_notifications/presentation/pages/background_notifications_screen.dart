@@ -1,18 +1,16 @@
-/* import 'package:auto_route/auto_route.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:baza_gibdd_gai/core/theme/app_fonts.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_card_layout.dart';
+import 'package:baza_gibdd_gai/core/widgets/app_custom_scaffold.dart';
 import 'package:baza_gibdd_gai/core/widgets/custom_app_bar.dart';
-import 'package:baza_gibdd_gai/features/profile/presentation/widgets/title.dart';
+import 'package:baza_gibdd_gai/features/local_notifications/presentation/widgets/mock_notification_wodget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
-import 'package:baza_gibdd_gai/core/widgets/app_circle_button.dart';
 import 'package:baza_gibdd_gai/features/local_notifications/presentation/bloc/notification_bloc.dart';
-import 'package:baza_gibdd_gai/features/local_notifications/presentation/widgets/notification_widget.dart';
-import 'package:baza_gibdd_gai/gen/assets.gen.dart';
 
 @RoutePage()
 class BackgroundNotificationsScreen extends StatefulWidget {
@@ -37,24 +35,11 @@ class _BackgroundNotificationsScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
+    return AppCustomScaffold(
       appBar: CustomAppBar.getAppBar(
-        isNeedImage: true,
-        onTapBackButton: () => context.router.maybePop(),
-        title: "Уведомления",
-        actions: [
-          AppCircleButton(
-            icon: Assets.icons.deletecredit,
-            buttonSize: 44,
-            padding: 10,
-            iconColor: Colors.white,
-            backgroundColor: Colors.white.withValues(alpha: 0.2),
-            onTap: () {},
-          ),
-        ],
-      ),
-      backgroundColor: Colors.white,
+          onTapBackButton: () => context.router.maybePop(),
+          title: "Ваши подписки",
+          isTitleCenter: true),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -62,10 +47,10 @@ class _BackgroundNotificationsScreenState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppCardLayout(
-                color: ColorStyles.gray,
+                color: ColorStyles.fillColor,
                 padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 16,
+                  vertical: 10,
+                  horizontal: 14,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,13 +61,27 @@ class _BackgroundNotificationsScreenState
                     ),
                     CupertinoSwitch(
                       value: switchValue,
+                      inactiveTrackColor:
+                          Color(0xff787880).withValues(alpha: 0.25),
                       onChanged: (v) => setState(() => switchValue = v),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 16),
-              const AppTitle('Уведомления'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text('Ваши подписки'.toUpperCase(),
+                        style: TextStyles.h2
+                            .copyWith(fontFamily: 'Oswald', fontSize: 24.sp)),
+                  ),
+                  Text('Очистить',
+                      style: TextStyles.h4.copyWith(
+                          fontWeight: FontWeight.w600, color: Colors.white60)),
+                ],
+              ),
               const SizedBox(height: 16),
               BlocBuilder(
                 bloc: bloc,
@@ -92,9 +91,18 @@ class _BackgroundNotificationsScreenState
                       child: Text('Ошибка загрузки уведомлений'),
                     );
                   } else if (state is NotificationLoadedSuccessfull) {
-                    if (state.messageResponses.isEmpty) {
+                    return Column(
+                      children: [
+                        MockNotificationWodget(title: 'СТС:'),
+                        SizedBox(height: 12),
+                        MockNotificationWodget(title: 'Паспорт:'),
+                        SizedBox(height: 12),
+                        MockNotificationWodget(title: 'Водителькое:')
+                      ],
+                    );
+                    /*  if (state.messageResponses.isEmpty) {
                       return _getEmptyListPlaceholder();
-                    }
+                    } */
                     /*  return Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
@@ -116,7 +124,7 @@ class _BackgroundNotificationsScreenState
                     ),
                   ); */
 
-                    return ListView.separated(
+                    /* return ListView.separated(
                       itemCount: state.messageResponses.length,
                       shrinkWrap: true,
                       padding: const EdgeInsets.all(20),
@@ -127,7 +135,7 @@ class _BackgroundNotificationsScreenState
                       },
                       separatorBuilder: (BuildContext context, int index) =>
                           const SizedBox(height: 10),
-                    );
+                    ); */
                   }
                   return const Center(child: CircularProgressIndicator());
                 },
@@ -139,12 +147,12 @@ class _BackgroundNotificationsScreenState
     );
   }
 
-  AppCardLayout _getEmptyListPlaceholder() => AppCardLayout(
-        color: ColorStyles.gray,
+/*   AppCardLayout _getEmptyListPlaceholder() => AppCardLayout(
+        color: ColorStyles.blueCardColor,
         padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 16),
         child: Row(
           children: [
-            Assets.icons.bellIcon.svg(
+            Assets.icons.bell.svg(
               colorFilter: ColorFilter.mode(
                 ColorStyles.black.withValues(alpha: 0.5),
                 BlendMode.srcIn,
@@ -154,6 +162,5 @@ class _BackgroundNotificationsScreenState
             Text('Вам еще не приходили уведомления', style: TextStyles.h3),
           ],
         ),
-      );
+      ); */
 }
- */

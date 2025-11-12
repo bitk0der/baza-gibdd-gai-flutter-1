@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:baza_gibdd_gai/core/constants/constants.dart';
+import 'package:baza_gibdd_gai/features/local_notifications/presentation/controllers/message_payload_handler.dart';
+import 'package:baza_gibdd_gai/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:baza_gibdd_gai/core/extensions/l10n_extension.dart';
@@ -36,6 +38,20 @@ class _AppRootScreenState extends State<AppRootScreen> {
     context.l10n.navbar_chat,
     context.l10n.navbar_reports
   ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (payloadToHandle != null) {
+        await Future.delayed(const Duration(seconds: 1), () {
+          handleNotificationTap(payloadToHandle);
+          payloadToHandle = null;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -22,8 +22,6 @@ import 'package:baza_gibdd_gai/features/payments/presentation/blocs/payments_sea
 import 'package:baza_gibdd_gai/features/payments/presentation/blocs/subscription_bloc.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/pages/payment_webview.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_button.dart';
-import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_checkbox.dart';
-import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_dialog.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/empty_search_placeholder.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/error_body.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/loading_screen.dart';
@@ -50,8 +48,6 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _checkboxController = CustomCheckboxController();
-
   @override
   void initState() {
     _bloc.add(
@@ -73,11 +69,11 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
     super.initState();
   }
 
-  @override
+/*   @override
   void dispose() {
     _bloc.close();
     super.dispose();
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +95,7 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
       listener: (context, state) {
         if (state is SubscriptionBlocShowButtonState) {
           if (state.showDialog) {
-            CustomDialog.show(
+            /*        CustomDialog.show(
               context: context,
               title: Strings.subscriptionDialogTitle,
               subtitle: Strings.subscriptionDialogSubtitle,
@@ -125,7 +121,7 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
                   _subscriptionBloc.add(SubscriptionBlocNotShowDialogEvent());
                 }
               },
-            );
+            ); */
           }
         }
       },

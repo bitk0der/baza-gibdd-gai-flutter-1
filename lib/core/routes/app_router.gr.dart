@@ -120,6 +120,22 @@ class AppWebViewPageArgs {
 }
 
 /// generated route for
+/// [BackgroundNotificationsScreen]
+class BackgroundNotificationsRoute extends PageRouteInfo<void> {
+  const BackgroundNotificationsRoute({List<PageRouteInfo>? children})
+      : super(BackgroundNotificationsRoute.name, initialChildren: children);
+
+  static const String name = 'BackgroundNotificationsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const BackgroundNotificationsScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ChatRouterPage]
 class ChatRouter extends PageRouteInfo<void> {
   const ChatRouter({List<PageRouteInfo>? children})

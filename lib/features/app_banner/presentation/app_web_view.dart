@@ -88,7 +88,7 @@ class _AppWebViewState extends State<AppWebView> {
         appBar: widget.appBar ??
             CustomAppBar.getAppBar(
               title: widget.title,
-              isNeedImage: true,
+              isTitleCenter: true,
               onTapBackButton: () => context.maybePop(),
             ),
         backgroundColor: ColorStyles.white,

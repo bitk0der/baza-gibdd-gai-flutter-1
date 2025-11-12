@@ -89,7 +89,7 @@ class _FillDataPageState extends State<FillDataPage> {
   Widget build(BuildContext context) {
     return AppCustomScaffold(
         appBar: CustomAppBar.getAppBar(
-          title: 'Заполните данные',
+          title: 'Проверка собственника',
           isTitleCenter: true,
           isNeedImage: false,
           onTapBackButton: () => context.maybePop(),

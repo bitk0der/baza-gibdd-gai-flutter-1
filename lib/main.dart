@@ -59,7 +59,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
       child: ScreenUtilInit(
         designSize: const Size(414, 896),
         child: MaterialApp.router(

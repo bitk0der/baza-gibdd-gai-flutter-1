@@ -57,6 +57,9 @@ class $AssetsIconsGen {
   SvgGenImage get arrowRight =>
       const SvgGenImage('assets/icons/arrow_right.svg');
 
+  /// File path: assets/icons/bell.svg
+  SvgGenImage get bell => const SvgGenImage('assets/icons/bell.svg');
+
   /// File path: assets/icons/blue_check.svg
   SvgGenImage get blueCheck => const SvgGenImage('assets/icons/blue_check.svg');
 
@@ -106,6 +109,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/send.svg
   SvgGenImage get send => const SvgGenImage('assets/icons/send.svg');
 
+  /// File path: assets/icons/trash.svg
+  SvgGenImage get trash => const SvgGenImage('assets/icons/trash.svg');
+
   /// File path: assets/icons/two_arrows.svg
   SvgGenImage get twoArrows => const SvgGenImage('assets/icons/two_arrows.svg');
 
@@ -128,6 +134,7 @@ class $AssetsIconsGen {
   List<SvgGenImage> get values => [
         activeCircle,
         arrowRight,
+        bell,
         blueCheck,
         carIcon,
         clock,
@@ -141,6 +148,7 @@ class $AssetsIconsGen {
         russianSymbol,
         search,
         send,
+        trash,
         twoArrows,
         unactiveCircle,
         verifiedShield,
