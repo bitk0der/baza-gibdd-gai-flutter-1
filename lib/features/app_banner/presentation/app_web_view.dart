@@ -14,10 +14,12 @@ class AppWebView extends StatefulWidget {
     this.url = '',
     this.title = '',
     this.isNeedBackButton = true,
+    this.isNeedAppBar = true,
     this.appBar,
     this.onFinished,
   });
   final bool isNeedBackButton;
+  final bool isNeedAppBar;
   final String url;
   final String title;
   final PreferredSizeWidget? appBar;
@@ -85,12 +87,14 @@ class _AppWebViewState extends State<AppWebView> {
           widget.onFinished != null ? widget.onFinished!() : null,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: widget.appBar ??
-            CustomAppBar.getAppBar(
-              title: widget.title,
-              isTitleCenter: true,
-              onTapBackButton: () => context.maybePop(),
-            ),
+        appBar: widget.isNeedAppBar
+            ? widget.appBar ??
+                CustomAppBar.getAppBar(
+                  title: widget.title,
+                  isTitleCenter: true,
+                  onTapBackButton: () => context.maybePop(),
+                )
+            : null,
         backgroundColor: ColorStyles.white,
         body: SafeArea(
           child: Stack(

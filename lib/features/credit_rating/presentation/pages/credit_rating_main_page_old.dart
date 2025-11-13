@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_custom_scaffold.dart';
+import 'package:baza_gibdd_gai/features/app_banner/presentation/app_web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -120,7 +121,10 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
             child: TabBarView(
               controller: tabController,
               children: [
-                firstTabFirstPage ? secondTab(true) : secondTabSecondPage(true),
+                AppWebView(
+                    isNeedAppBar: false,
+                    url:
+                        'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/appwidget/orders.html'),
                 secondTabFirstPage
                     ? secondTab(false)
                     : secondTabSecondPage(false),

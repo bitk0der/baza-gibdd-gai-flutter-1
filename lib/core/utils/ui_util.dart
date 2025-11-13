@@ -18,6 +18,14 @@ class UiUtil {
     }
   }
 
+  static final numberRegEx = RegExp(
+    r"^[авекмнорстухАВЕКМНОРСТУХabekmhopctyxABEKMHOPCTYX]\d{3}[авекмнорстухАВЕКМНОРСТУХabekmhopctyxABEKMHOPCTYX]{2}\d{1,3}$",
+  );
+
+  static final vinRegEx = RegExp(
+    r"^[0-9abcdefghjklmnprstuvwxyzABCDEFGHJKLMNPRSTUVWXYZ%\- ]{6,17}$",
+  );
+
   static bool isDatePassed(String dateStr, [DateTime? comparisonDate]) {
     // Преобразуем строку в объект DateTime
     DateFormat dateFormat = DateFormat('dd.MM.yyyy');

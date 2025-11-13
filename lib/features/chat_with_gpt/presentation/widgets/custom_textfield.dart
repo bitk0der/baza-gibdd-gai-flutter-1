@@ -64,7 +64,7 @@ class CustomTextField extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         style: textStyle ??
-            TextStyles.h4.copyWith(fontSize: 16.sp, color: Colors.black),
+            TextStyles.h4.copyWith(fontSize: 16.sp, color: Colors.white),
         maxLength: maxLength,
         cursorColor: ColorStyles.white,
         inputFormatters: inputFormatters,

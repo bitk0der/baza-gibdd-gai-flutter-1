@@ -2,6 +2,7 @@ import 'package:baza_gibdd_gai/core/network/api_path.dart';
 import 'package:baza_gibdd_gai/core/routes/app_router.dart';
 import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/theme/app_fonts.dart';
+import 'package:baza_gibdd_gai/core/utils/ui_util.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_button.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_card_layout.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_gradient_svg_icon.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:baza_gibdd_gai/gen/assets.gen.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -33,7 +35,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.initState();
   }
 
+  final gosNumberKey = GlobalKey<FormState>();
+  final vinKey = GlobalKey<FormState>();
   List<String> hints = ['А 777 АА 77', 'Укажите VIN'];
+  final carPlateFormatter = MaskTextInputFormatter(
+    mask: 'A ### AA ##',
+    filter: {"A": RegExp(r'[А-ЯA-Z]'), "#": RegExp(r'[0-9]')},
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -254,35 +262,68 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Widget tabContent(int index) {
     bool isActive = textEditingControllers[index].text.isNotEmpty;
-    return Column(
-      children: [
-        SizedBox(height: 16),
-        CustomTextField(
-            hintText: hints[index],
-            keyboardType: TextInputType.name,
-            onChanged: (v) => setState(() {}),
-            textAlign: TextAlign.center,
-            padding: EdgeInsets.symmetric(vertical: 17.h),
-            textStyle:
-                TextStyles.h4.copyWith(fontSize: 24.sp, color: Colors.white),
-            hintStyle: TextStyles.h3.copyWith(
-                fontSize: 24.sp, color: Colors.white.withValues(alpha: 0.5)),
-            controller: textEditingControllers[index]),
-        SizedBox(height: 16),
-        AppButton(
-          title: 'Начать проверку',
-          backgroundColor:
-              !isActive ? ColorStyles.secondaryBlue : ColorStyles.blue,
-          titleColor:
-              !isActive ? Colors.white.withValues(alpha: 0.5) : Colors.white,
-          onTap: !isActive
-              ? null
-              : () => context.router.navigate(AppWebViewPage(
-                  title: 'Результат проверки',
-                  url: ApiPath.getAutoCheckString(
-                      textEditingControllers[index].text, index == 0))),
-        )
-      ],
+    return Form(
+      key: index == 0 ? gosNumberKey : vinKey,
+      child: Column(
+        children: [
+          SizedBox(height: 16),
+          CustomTextField(
+              hintText: hints[index],
+              inputFormatters: [
+                UpperCaseTextFormatter(),
+                if (index == 0) carPlateFormatter
+              ],
+              keyboardType: TextInputType.name,
+              onChanged: (v) => setState(() {}),
+              textAlign: TextAlign.center,
+              validator: (v) {
+                if (index == 0) {
+                  if (UiUtil.numberRegEx.hasMatch(
+                      textEditingControllers[index].text.replaceAll(' ', ''))) {
+                    return null;
+                  }
+                } else {
+                  if (UiUtil.vinRegEx
+                      .hasMatch(textEditingControllers[index].text)) {
+                    return null;
+                  }
+                }
+                return 'Неверно введен номер';
+              },
+              padding: EdgeInsets.symmetric(vertical: 17.h),
+              textStyle:
+                  TextStyles.h4.copyWith(fontSize: 24.sp, color: Colors.white),
+              hintStyle: TextStyles.h3.copyWith(
+                  fontSize: 24.sp, color: Colors.white.withValues(alpha: 0.5)),
+              controller: textEditingControllers[index]),
+          SizedBox(height: 16),
+          AppButton(
+            title: 'Начать проверку',
+            backgroundColor:
+                !isActive ? ColorStyles.secondaryBlue : ColorStyles.blue,
+            titleColor:
+                !isActive ? Colors.white.withValues(alpha: 0.5) : Colors.white,
+            onTap: !isActive
+                ? null
+                : () {
+                    if (index == 0) {
+                      if (!gosNumberKey.currentState!.validate()) {
+                        return;
+                      }
+                    } else {
+                      if (!vinKey.currentState!.validate()) {
+                        return;
+                      }
+                    }
+
+                    context.router.navigate(AppWebViewPage(
+                        title: 'Результат проверки',
+                        url: ApiPath.getAutoCheckString(
+                            textEditingControllers[index].text, index == 0)));
+                  },
+          )
+        ],
+      ),
     );
   }
 }

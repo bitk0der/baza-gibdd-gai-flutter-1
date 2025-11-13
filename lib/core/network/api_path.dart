@@ -35,7 +35,7 @@ class ApiPath {
 
   static const getPaymentLink = '$baseUrl/pers/persbuyreport.php';
 
-  static const checkPayment = 'https://rzta.ru/nspd/bkli/bklipaymentcheck.php';
+  static const checkPayment = '$baseUrl/pers/perspaymentcheck.php';
 
   static const getReceivingOrders = '$baseUrl/pers/persreportsorders.php';
 
@@ -46,10 +46,7 @@ class ApiPath {
     if (isGosNumber) {
       return 'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/appwidget/search.html?inputnumber=$number';
     } else {
-      return 'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/appwidget/search.html?inputvin=VIN_$number';
+      return 'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/appwidget/search.html?inputvin=$number';
     }
   }
-
-  static const checkAutoSearch =
-      'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/appwidget/search.html?inputnumber=';
 }

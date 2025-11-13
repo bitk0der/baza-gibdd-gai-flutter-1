@@ -36,11 +36,12 @@ class CheckoutPage extends StatefulWidget {
 
 CreditRatingCubit creditRatingCubit = GetIt.I<CreditRatingCubit>();
 final infoGlobalKey = GlobalKey<FormState>();
-TextEditingController emailController = TextEditingController();
+late TextEditingController emailController;
 
 class _CheckoutPageState extends State<CheckoutPage> {
   @override
   void initState() {
+    emailController = TextEditingController();
     emailController.text =
         GetIt.I<SharedPreferences>().getString('userEmail') ?? '';
     super.initState();
