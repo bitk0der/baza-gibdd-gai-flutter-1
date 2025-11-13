@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
-import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:baza_gibdd_gai/features/local_notifications/main_notification_logic.dart';
 import 'package:baza_gibdd_gai/features/payments/data/models/payments/fssp_trial.dart';
@@ -89,14 +88,14 @@ class SubscriptionBloc
       } catch (e) {
         Logger().e(e);
       } finally {
-        if (subscriptions.isEmpty) {
+        /* if (subscriptions.isEmpty) {
           BackgroundFetch.scheduleTask(TaskConfig(
             taskId: 'subscription',
             periodic: true,
             delay: 15,
             requiredNetworkType: NetworkType.ANY,
           ));
-        }
+        } */
         final subscription = Subscription(
           paymentsNumbers: List.generate(
             payments.length,
@@ -141,9 +140,9 @@ class SubscriptionBloc
       subscriptions.removeWhere(
           (element) => element.userData == event.subscription.userData);
       await storageRepository.saveSubscriptions(subscriptions: subscriptions);
-      if (subscriptions.isEmpty) {
+      /*  if (subscriptions.isEmpty) {
         BackgroundFetch.stop('subscription');
-      }
+      } */
       emit(SubscriptionBlocReadyState(subscriptions));
     }
   }
@@ -151,7 +150,7 @@ class SubscriptionBloc
   Future<void> _onUnsubscribeAllEvent(SubscriptionBlocUnsubscribeAllEvent event,
       Emitter<SubscriptionBlocState> emit) async {
     await storageRepository.saveSubscriptions(subscriptions: []);
-    BackgroundFetch.stop('subscription');
+    /*  BackgroundFetch.stop('subscription'); */
     emit(SubscriptionBlocReadyState([]));
   }
 

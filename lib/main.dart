@@ -1,5 +1,6 @@
 import 'package:baza_gibdd_gai/core/constants/constants.dart';
 import 'package:baza_gibdd_gai/core/di/service_locator.dart';
+import 'package:baza_gibdd_gai/core/network/api_path.dart';
 import 'package:baza_gibdd_gai/core/routes/app_router.dart';
 import 'package:baza_gibdd_gai/core/theme/theme.dart';
 import 'package:baza_gibdd_gai/core/utils/random_string_generator.dart';
@@ -16,8 +17,8 @@ import 'package:easy_localization/easy_localization.dart';
 
 var globalUserId = '';
 
-/* AppMetricaConfig get _config =>
-    const AppMetricaConfig(ApiPath.appMetrikaConfigKey, logs: false); */
+AppMetricaConfig get _config =>
+    const AppMetricaConfig(ApiPath.appMetrikaConfigKey, logs: false);
 final appNavigatorKey = GlobalKey<NavigatorState>();
 final _appRouter = AppRouter(appNavigatorKey);
 String? payloadToHandle;
@@ -25,7 +26,7 @@ String? payloadToHandle;
 void main() async {
   AppMetrica.runZoneGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
-    /*  await AppMetrica.activate(_config); */
+    await AppMetrica.activate(_config);
     await EasyLocalization.ensureInitialized();
 
     await initServiceLocator();

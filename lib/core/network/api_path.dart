@@ -29,7 +29,8 @@ class ApiPath {
 
   static const gibddFines = "$baseUrl/fsspgibddsearch.php";
 
-  static const reportExampleUrl = '$baseUrl/pers/examplepers.pdf';
+  static const reportExampleUrl =
+      'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/appwidget/report-example.pdf';
 
   static const getCart = '$baseUrl/pers/persreportsavailable.php';
 
