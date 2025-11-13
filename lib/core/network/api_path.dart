@@ -1,47 +1,55 @@
 class ApiPath {
-  static const baseUrl = 'https://xn----7sboldak4aeeqnag.xn--p1ai';
+  static const baseUrl = 'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/gaiapp';
 
-  static const banners =
-      'https://xn----7sboldak4aeeqnag.xn--p1ai/migrantreestr/appinfo.php';
+  static const banners = '/gaiapp.php';
 
-  static const sendMessage =
-      'https://xn--80anhm0a.xn--p1ai/apimobile/machat/masend.php';
-  static const getLastMessage =
-      'https://xn--80anhm0a.xn--p1ai/apimobile/machat/mareceive.php';
+  static const sendMessage = '$baseUrl/helpreq.php';
+  static const getLastMessage = '$baseUrl/helpresp.php';
 
-  static const getBackgroundNotification =
-      'https://xn----7sboldak4aeeqnag.xn--p1ai/migrantreestr/deportpatent/chat/sendanswer.php';
+  static const getBackgroundNotification = '$baseUrl/helpresp.php';
 
-  static const appMetrikaConfigKey = '';
+  static const appMetrikaConfigKey = '970fabff-d5d0-4837-bb5d-57c14032580a';
 
   static String paymentScreenUrl(String yin) {
     if (yin.startsWith('182')) {
-      return '$baseUrl/migrantreestr/plategi/sendnalogppurl.php?uin=$yin';
+      return '$baseUrl/oplat/sendnalogppurl.php?uin=$yin';
     } else {
-      return '$baseUrl/migrantreestr/plategi/sendfssppurl.php?uin=$yin';
+      return '$baseUrl/oplat/sendnalogppurl.php?uin=$yin';
     }
   }
 
   static String getInvoiceInfo() =>
-      "${ApiPath.baseUrl}/migrantreestr/plategi/sendgetinvoiceinfoppl.php";
+      "${ApiPath.baseUrl}/oplat/sendgetinvoiceinfoppl.php";
 
-  static String getDoSearch() =>
-      "${ApiPath.baseUrl}/migrantreestr/plategi/senddosearch.php";
+  static String getDoSearch() => "${ApiPath.baseUrl}/oplat/senddosearch.php";
 
-  static String getResult() =>
-      "${ApiPath.baseUrl}/migrantreestr/plategi/sendgetresult.php";
+  static String getResult() => "${ApiPath.baseUrl}/oplat/sendgetresult.php";
 
-  static String loadFsin() =>
-      "$baseUrl/migrantreestr/plategi/fsinregionitems.json";
+  static String loadFsin() => "$baseUrl/oplat/fsinregionitems.json";
 
-  static const reportExampleUrl = 'https://rzta.ru/nspd/bkli/examplebki.pdf';
+  static const gibddFines = "https://moneta.avtoapi.ru/search/v2/fsspgibdd";
 
-  static const getCart = 'https://rzta.ru/nspd/bkli/bklireportsavailable.php';
+  static const reportExampleUrl = '$baseUrl/pers/examplepers.pdf';
 
-  static const getPaymentLink = 'https://rzta.ru/nspd/bkli/bklibuyreport.php';
+  static const getCart = '$baseUrl/pers/persreportsavailable.php';
+
+  static const getPaymentLink = '$baseUrl/pers/persbuyreport.php';
 
   static const checkPayment = 'https://rzta.ru/nspd/bkli/bklipaymentcheck.php';
 
-  static const getReceivingOrders =
-      'https://rzta.ru/nspd/bkli/bklireportsget.php';
+  static const getReceivingOrders = '$baseUrl/pers/persreportsorders.php';
+
+  static const checkAutoWidget =
+      'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/appwidget/orders.html';
+
+  static String getAutoCheckString(String number, bool isGosNumber) {
+    if (isGosNumber) {
+      return 'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/appwidget/search.html?inputnumber=$number';
+    } else {
+      return 'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/appwidget/search.html?inputvin=VIN_$number';
+    }
+  }
+
+  static const checkAutoSearch =
+      'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/appwidget/search.html?inputnumber=';
 }

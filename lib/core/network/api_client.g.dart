@@ -12,7 +12,7 @@ part of 'api_client.dart';
 
 class _ApiClient implements ApiClient {
   _ApiClient(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://xn----7sboldak4aeeqnag.xn--p1ai';
+    baseUrl ??= 'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/gaiapp';
   }
 
   final Dio _dio;
@@ -32,7 +32,7 @@ class _ApiClient implements ApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://xn--80anhm0a.xn--p1ai/apimobile/machat/masend.php',
+            'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/gaiapp/helpreq.php',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -60,7 +60,7 @@ class _ApiClient implements ApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://xn--80anhm0a.xn--p1ai/apimobile/machat/mareceive.php',
+            'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/gaiapp/helpresp.php',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -87,7 +87,7 @@ class _ApiClient implements ApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://xn--80anhm0a.xn--p1ai/apimobile/machat/mareceive.php',
+            'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/gaiapp/helpresp.php',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -114,7 +114,7 @@ class _ApiClient implements ApiClient {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://rzta.ru/nspd/bkli/bklireportsavailable.php',
+            'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/gaiapp/pers/persreportsavailable.php',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -142,7 +142,7 @@ class _ApiClient implements ApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://rzta.ru/nspd/bkli/bklibuyreport.php',
+            'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/gaiapp/pers/persbuyreport.php',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -198,7 +198,7 @@ class _ApiClient implements ApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://rzta.ru/nspd/bkli/bklireportsget.php',
+            'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/gaiapp/pers/persreportsorders.php',
             queryParameters: queryParameters,
             data: _data,
           )

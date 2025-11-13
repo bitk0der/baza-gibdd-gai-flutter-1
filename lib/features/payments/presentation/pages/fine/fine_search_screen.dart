@@ -25,7 +25,6 @@ import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_but
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/empty_search_placeholder.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/error_body.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/loading_screen.dart';
-import 'package:baza_gibdd_gai/gen/assets.gen.dart';
 
 @RoutePage()
 class FineSearchScreen extends StatefulWidget {
@@ -135,8 +134,8 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
                 children: [
                   if (state.fines.isNotEmpty) _getBody(state.fines),
                   if (state.fines.isEmpty) const EmptySearchPlaceholder(),
-                  if (subscriptionState is SubscriptionBlocShowButtonState)
-                    _getSubscribeButton(),
+                  /* if (subscriptionState is SubscriptionBlocShowButtonState)
+                    _getSubscribeButton(), */
                 ],
               ),
             );
@@ -319,7 +318,7 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
     );
   }
 
-  Widget _getSubscribeButton() {
+/*   Widget _getSubscribeButton() {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
@@ -370,7 +369,7 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
         ),
       ),
     );
-  }
+  } 
 
   void _showSuccessSubscriptionDialog() {
     showDialog(
@@ -469,5 +468,5 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
         );
       },
     );
-  }
+  }*/
 }

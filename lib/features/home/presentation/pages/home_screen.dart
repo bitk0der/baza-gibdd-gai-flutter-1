@@ -277,8 +277,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               !isActive ? Colors.white.withValues(alpha: 0.5) : Colors.white,
           onTap: !isActive
               ? null
-              : () => context.router
-                  .navigate(AppWebViewPage(title: 'Результат проверки')),
+              : () => context.router.navigate(AppWebViewPage(
+                  title: 'Результат проверки',
+                  url: ApiPath.getAutoCheckString(
+                      textEditingControllers[index].text, index == 0))),
         )
       ],
     );

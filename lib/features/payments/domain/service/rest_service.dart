@@ -39,7 +39,7 @@ class RestService {
     while (attemptCount < 12) {
       try {
         final response = await _dio.post(
-          "https://moneta.avtoapi.ru/search/v2/fsspgibdd",
+          ApiPath.gibddFines,
           data: body,
         );
 

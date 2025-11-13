@@ -38,8 +38,8 @@ class EmptySearchPlaceholder extends StatelessWidget {
                     width: 60.w,
                     height: 60.w,
                     child: AppGradientSvgIcon(
-                        gradient: ColorStyles.cardGradient,
-                        icon: Assets.icons.verifiedShield),
+                        gradient: ColorStyles.appbarGradient,
+                        icon: Assets.icons.verifiedShieldNonOpacity),
                   ),
                   SizedBox(height: 20.h),
                   Text(

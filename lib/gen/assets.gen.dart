@@ -123,6 +123,10 @@ class $AssetsIconsGen {
   SvgGenImage get verifiedShield =>
       const SvgGenImage('assets/icons/verified_shield.svg');
 
+  /// File path: assets/icons/verified_shield_non_opacity.svg
+  SvgGenImage get verifiedShieldNonOpacity =>
+      const SvgGenImage('assets/icons/verified_shield_non_opacity.svg');
+
   /// File path: assets/icons/verify_mark.svg
   SvgGenImage get verifyMark =>
       const SvgGenImage('assets/icons/verify_mark.svg');
@@ -152,6 +156,7 @@ class $AssetsIconsGen {
         twoArrows,
         unactiveCircle,
         verifiedShield,
+        verifiedShieldNonOpacity,
         verifyMark,
         warning
       ];
