@@ -102,7 +102,7 @@ class _FillDataPageState extends State<FillDataPage> {
                   child: SizedBox(
                     width: 48,
                     height: 48,
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(color: ColorStyles.blue),
                   ),
                 )
               : ListView(

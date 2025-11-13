@@ -38,7 +38,7 @@ class EmptySearchPlaceholder extends StatelessWidget {
                     width: 60.w,
                     height: 60.w,
                     child: AppGradientSvgIcon(
-                        gradient: ColorStyles.appbarGradient,
+                        gradient: ColorStyles.blueIconGradient,
                         icon: Assets.icons.verifiedShieldNonOpacity),
                   ),
                   SizedBox(height: 20.h),

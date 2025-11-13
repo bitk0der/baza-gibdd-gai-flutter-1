@@ -68,16 +68,16 @@ class PaymentsMapper {
     List<Tax> taxes = [];
     List<Fine> fines = [];
     List<Trial> trials = [];
-    var category = body["type"];
+    /*  var category = body["type"]; */
 
     for (var element in apiPayments) {
-      if (category == "Tax") {
+      /*    if (category == "Tax") {
         taxes.add(Tax.fromJson(element));
       } else if (category == "Trial") {
         trials.add(Trial.fromJson(element));
-      } else {
-        fines.add(Fine.fromJson(element));
-      }
+      } else { */
+      fines.add(Fine.fromJson(element));
+      /*  } */
     }
 
     return {"taxes": taxes, "fines": fines, "trials": trials};

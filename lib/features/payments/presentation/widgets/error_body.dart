@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/utils/strings.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_button.dart';
@@ -58,29 +57,19 @@ class ErrorPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      height: double.maxFinite,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        color: ColorStyles.primaryBlue,
-      ),
+    return SafeArea(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Spacer(),
-          Align(
-            alignment: Alignment.center,
-            child: SvgPicture.asset('assets/icons/error.svg', width: 180.w),
-          ),
-          const Spacer(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Text(
-              Strings.errorTitle,
+              Strings.errorTitle.toUpperCase(),
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: ColorStyles.primaryBlue,
+                color: ColorStyles.white,
+                fontFamily: 'Oswald',
                 fontSize: 26.sp,
               ),
             ),
@@ -92,7 +81,7 @@ class ErrorPlaceholder extends StatelessWidget {
               Strings.errorText,
               style: TextStyle(
                 fontWeight: FontWeight.w400,
-                color: ColorStyles.primaryBlue.withOpacity(0.7),
+                color: ColorStyles.white.withValues(alpha: 0.7),
                 fontSize: 18.sp,
               ),
             ),
@@ -102,7 +91,7 @@ class ErrorPlaceholder extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: CustomButton(
               title: Strings.goSearch,
-              color: ColorStyles.invoiceStatusRed,
+              color: ColorStyles.blue,
               height: 50,
               onTap: () => Navigator.pop(context),
             ),

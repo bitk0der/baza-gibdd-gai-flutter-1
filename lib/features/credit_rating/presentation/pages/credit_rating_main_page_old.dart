@@ -163,7 +163,8 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
                   searchController.text.toLowerCase(),
                 );
           }).toList();
-          return Stack(
+          return SafeArea(
+              child: Stack(
             children: [
               Scaffold(
                 backgroundColor: Colors.transparent,
@@ -273,14 +274,14 @@ class _CreditRatingMainPageState extends State<CreditRatingMainOldPage>
                   child: checkButton(isGibdd),
                 ),
             ],
-          );
+          ));
         }
 
         return Center(
           child: SizedBox(
             height: 44,
             width: 44,
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: ColorStyles.blue),
           ),
         );
       },

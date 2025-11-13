@@ -409,9 +409,8 @@ var regionsMap = {
 };
 const List<Map<String, String>> pages = [
   {
-    'title': 'Бесплатный помощник ГАИ / ПДД\nна базе ИИ',
-    'subtitle':
-        'Lorem ipsum dolor sit amet consectetur. Id odio quis amet porta tortor vulputate ornare. Fringilla faucibus sagittis auctor mauris sed est. Cursus pharetra nulla enim at turpis.',
+    'title': 'Бесплатный\nпомощник ГАИ / ПДД',
+    'subtitle': 'Бесплатные онлайн консультации для автомобилистов',
     'button': 'Задать вопрос',
   },
 ];

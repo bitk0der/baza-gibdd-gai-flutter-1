@@ -6,6 +6,8 @@ import 'package:baza_gibdd_gai/core/utils/ui_util.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_button.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_card_layout.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_gradient_svg_icon.dart';
+import 'package:baza_gibdd_gai/features/app_banner/app_banner_initial_setup.dart';
+import 'package:baza_gibdd_gai/features/app_banner/presentation/app_universal_banner_widget.dart';
 import 'package:baza_gibdd_gai/features/chat_with_gpt/presentation/widgets/custom_textfield.dart';
 import 'package:contentsize_tabbarview/contentsize_tabbarview.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:baza_gibdd_gai/gen/assets.gen.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -40,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<String> hints = ['А 777 АА 77', 'Укажите VIN'];
   final carPlateFormatter = MaskTextInputFormatter(
     mask: 'A ### AA ##',
-    filter: {"A": RegExp(r'[А-ЯA-Z]'), "#": RegExp(r'[0-9]')},
+    filter: {"A": RegExp(r'[А-Я]'), "#": RegExp(r'[0-9]')},
   );
 
   @override
@@ -144,11 +147,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ],
                               )),
                           SizedBox(height: 14),
+                          AppUniversalBannerWidget(
+                              category: 'main-page-1', banners: bannerList),
+                          AppUniversalBannerWidget(
+                              category: 'main-page-2', banners: bannerList),
                           IntrinsicHeight(
                             child: Row(
                               children: [
                                 Flexible(
                                   child: AppCardLayout(
+                                      onTap: () =>
+                                          context.router.navigate(ChatRouter()),
                                       backgroundImage:
                                           Assets.images.aiHelper.path,
                                       width: double.infinity,
@@ -189,6 +198,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                           ),
                           SizedBox(height: 14),
+                          AppUniversalBannerWidget(
+                              category: 'main-page-3', banners: bannerList),
                           AppCardLayout(
                               backgroundImage: Assets.images.carMain.path,
                               width: double.infinity,
@@ -227,10 +238,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget gradientCard(bool isGreenCard) => AppCardLayout(
-      onTap: () => context.router.navigate(isGreenCard
-          ? AppWebViewPage(
-              title: 'Пример отчета', url: ApiPath.reportExampleUrl)
-          : FinesRouter()),
+      onTap: () => isGreenCard
+          ? launchUrl(Uri.parse(ApiPath.reportExampleUrl))
+          : context.router.navigate(FinesRouter()),
       gradient: isGreenCard
           ? ColorStyles.darkGreenGradient
           : ColorStyles.darkOrangeGradient,
@@ -315,7 +325,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         return;
                       }
                     }
-
+                    WidgetsBinding.instance.focusManager.primaryFocus
+                        ?.unfocus();
                     context.router.navigate(AppWebViewPage(
                         title: 'Результат проверки',
                         url: ApiPath.getAutoCheckString(

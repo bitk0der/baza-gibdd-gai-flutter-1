@@ -6,11 +6,11 @@ import 'package:baza_gibdd_gai/features/payments/domain/repositories/search_data
 import 'package:baza_gibdd_gai/features/payments/domain/repositories/storage_data_repository.dart';
 import 'package:baza_gibdd_gai/features/payments/domain/repositories/storage_util.dart';
 import 'package:baza_gibdd_gai/features/payments/domain/service/rest_service.dart';
+import 'package:baza_gibdd_gai/features/payments/presentation/widgets/empty_search_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
 import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/utils/strings.dart';
 import 'package:baza_gibdd_gai/core/utils/ui_util.dart';
@@ -22,7 +22,6 @@ import 'package:baza_gibdd_gai/features/payments/presentation/blocs/payments_sea
 import 'package:baza_gibdd_gai/features/payments/presentation/blocs/subscription_bloc.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/pages/payment_webview.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/custom_button.dart';
-import 'package:baza_gibdd_gai/features/payments/presentation/widgets/empty_search_placeholder.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/error_body.dart';
 import 'package:baza_gibdd_gai/features/payments/presentation/widgets/loading_screen.dart';
 
@@ -42,13 +41,14 @@ class FineSearchScreen extends StatefulWidget {
 }
 
 class _FineSearchScreenState extends State<FineSearchScreen> {
-  final _bloc = GetIt.I<PaymentsSearchBloc>();
+  late PaymentsSearchBloc _bloc;
   late SubscriptionBloc _subscriptionBloc;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
+    _bloc = GetIt.I<PaymentsSearchBloc>();
     _bloc.add(
         PaymentsSearchBlocSearchEvent(widget.userData, SubscriptionType.fines));
     if (!widget.isFromPush) {
@@ -68,7 +68,7 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
     super.initState();
   }
 
-/*   @override
+  /*  @override
   void dispose() {
     _bloc.close();
     super.dispose();
@@ -132,7 +132,7 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
               bloc: _subscriptionBloc,
               builder: (_, subscriptionState) => Stack(
                 children: [
-                  if (state.fines.isNotEmpty) _getBody(state.fines),
+                  /*  if (state.fines.isNotEmpty) */ _getBody(state.fines),
                   if (state.fines.isEmpty) const EmptySearchPlaceholder(),
                   /* if (subscriptionState is SubscriptionBlocShowButtonState)
                     _getSubscribeButton(), */
@@ -159,11 +159,11 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
       itemBuilder: (context, index) {
         if (index == 0) {
           return Text(
-            "По вашему запросу найдено ${fines.length} ${UiUtil.generatePaymentPlural(fines.length)}",
+            "Найдено ${fines.length} ${UiUtil.invoicesCountPlural(fines.length)}",
             style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14.sp,
-              color: ColorStyles.black,
+              color: ColorStyles.white,
             ),
           );
         } else {
@@ -180,9 +180,12 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
   Widget _getFineCard(Fine fine) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: ColorStyles.white,
-      ),
+          borderRadius: BorderRadius.circular(10),
+          color: ColorStyles.white,
+          gradient: LinearGradient(
+              colors: ColorStyles.cardGradient,
+              end: Alignment.bottomLeft,
+              begin: AlignmentGeometry.topRight)),
       padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,57 +202,56 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
                     color: ColorStyles.primaryBlue,
                   ),
                 ), */
-                Text(
+                /*  Text(
                   DateFormat('dd.MM.yyyy, HH:mm').format(fine.date!),
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14.sp,
-                    color: ColorStyles.black,
+                    color: ColorStyles.white,
                   ),
-                ),
+                ), */
               ],
             ),
           ],
-          /*   Text(
-            "${fine.summ} руб.",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 24.sp,
-              color: ColorStyles.invoiceStatusRed,
-            ),
-          ),
-          SizedBox(height: 12.h), */
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(14)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (fine.name != null)
-                  Text(
-                    fine.name!,
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                      color: ColorStyles.black,
-                    ),
-                  ),
-                SizedBox(height: 8.h),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                fine.number.toString().replaceRange(
+                    13, fine.number!.length, '*' * (fine.number!.length - 13)),
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: ColorStyles.white,
+                ),
+              ),
+              if (fine.name != null)
                 Text(
-                  fine.number.toString().replaceRange(13, fine.number!.length,
-                      '*' * (fine.number!.length - 13)),
+                  fine.name!.toUpperCase(),
                   style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: ColorStyles.black,
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Oswald',
+                    color: ColorStyles.white,
                   ),
                 ),
-              ],
-            ),
+            ],
           ),
           SizedBox(height: 10.h),
+          if (fine.summ != null)
+            Text(
+              "${fine.summ!.toInt()} ₽",
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 24.sp,
+                fontFamily: 'Oswald',
+                color: ColorStyles.lightblue,
+              ),
+            ),
+          if (fine.summ != null) SizedBox(height: 12.h),
           Container(
             padding: EdgeInsets.all(14.w),
+            width: double.infinity,
             decoration: BoxDecoration(
                 color: ColorStyles.fillColor,
                 borderRadius: BorderRadius.circular(14)),
@@ -261,7 +263,7 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
-                    color: ColorStyles.black,
+                    color: ColorStyles.white.withValues(alpha: 0.6),
                   ),
                 ),
                 if (fine.organization != null) ...[
@@ -270,7 +272,7 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w600,
-                      color: ColorStyles.black,
+                      color: ColorStyles.white,
                     ),
                   ),
                 ],
@@ -280,7 +282,7 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
           SizedBox(height: 20.h),
           Row(
             children: [
-              Flexible(
+              /* Flexible(
                 child: CustomButton(
                   title: "${fine.summ!.toInt()} ₽",
                   height: 46.h,
@@ -296,7 +298,7 @@ class _FineSearchScreenState extends State<FineSearchScreen> {
                   },
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 10), */
               Flexible(
                   child: CustomButton(
                 title: "Оплатить",

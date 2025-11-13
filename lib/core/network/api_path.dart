@@ -1,7 +1,7 @@
 class ApiPath {
   static const baseUrl = 'https://xn----7sbbdcsj3bpai5b1a8n.xn--p1ai/gaiapp';
 
-  static const banners = '/gaiapp.php';
+  static const banners = '$baseUrl/gaiapp.php';
 
   static const sendMessage = '$baseUrl/helpreq.php';
   static const getLastMessage = '$baseUrl/helpresp.php';
@@ -27,7 +27,7 @@ class ApiPath {
 
   static String loadFsin() => "$baseUrl/oplat/fsinregionitems.json";
 
-  static const gibddFines = "https://moneta.avtoapi.ru/search/v2/fsspgibdd";
+  static const gibddFines = "$baseUrl/fsspgibddsearch.php";
 
   static const reportExampleUrl = '$baseUrl/pers/examplepers.pdf';
 
