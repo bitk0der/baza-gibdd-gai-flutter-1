@@ -3,7 +3,6 @@ import 'package:baza_gibdd_gai/core/routes/app_router.dart';
 import 'package:baza_gibdd_gai/core/theme/app_colors.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_button.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_card_layout.dart';
-import 'package:baza_gibdd_gai/core/widgets/app_circle_button.dart';
 import 'package:baza_gibdd_gai/core/widgets/app_custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -73,7 +72,7 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
           title: 'Поиск и оплата штрафов ГИБДД',
           isBackButton: false,
           onTapBackButton: () => context.maybePop(),
-          actions: [
+          /*   actions: [
             AppCircleButton(
                 buttonSize: 40,
                 padding: 9,
@@ -81,7 +80,7 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
                 backgroundColor: Colors.white.withValues(alpha: 0.1),
                 onTap: () =>
                     context.router.navigate(BackgroundNotificationsRoute())),
-          ],
+          ], */
         ),
         body: _getBody(),
         floatingActionButton: SafeArea(
@@ -96,7 +95,7 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
                   onTap: _onButtonPressed,
                 ),
               ),
-              if (!keyboardVisible) SizedBox(height: 125.h),
+              if (!keyboardVisible) SizedBox(height: kToolbarHeight * 2),
             ],
           ),
         ),
@@ -107,7 +106,7 @@ class _FinePaymentScreenState extends State<FinePaymentScreen> {
   Widget _getBody() {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
       child: Column(
         children: [
           AppUniversalBannerWidget(category: 'pays-page', banners: bannerList),

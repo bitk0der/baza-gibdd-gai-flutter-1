@@ -136,7 +136,7 @@ class _MessageWidgetState extends State<MessageWidget> {
   Widget _buildUserMessage() {
     return Text(
       widget.message.message,
-      textAlign: TextAlign.right,
+      textAlign: TextAlign.left,
       style: TextStyles.h3.copyWith(fontSize: 16.sp, color: Colors.black),
     );
   }

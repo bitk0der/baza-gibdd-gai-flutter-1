@@ -31,7 +31,7 @@ class ErrorBody extends StatelessWidget {
               Icon(
                 Icons.warning_amber_rounded,
                 size: 100,
-                color: iconColor ?? ColorStyles.black,
+                color: iconColor ?? ColorStyles.white,
               ),
               SizedBox(height: 5.h),
               Text(
@@ -41,7 +41,7 @@ class ErrorBody extends StatelessWidget {
                     TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 22.sp,
-                      color: ColorStyles.black,
+                      color: ColorStyles.white,
                     ),
               ),
             ],

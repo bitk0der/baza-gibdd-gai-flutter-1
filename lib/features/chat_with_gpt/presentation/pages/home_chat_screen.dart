@@ -133,14 +133,18 @@ class _HomeScreenState extends State<HomeChatScreen>
                       /* if (bannerList.isNotEmpty) SizedBox(height: 10.h), */
                       Expanded(
                         child: state is ChatErrorState
-                            ? Center(
-                                child: ErrorBody(
-                                  text: state.text ?? 'Ошибка!',
-                                  iconColor: Colors.white,
+                            ? SafeArea(
+                                child: Center(
+                                  child: ErrorBody(
+                                    text: state.text ?? 'Ошибка!',
+                                    iconColor: Colors.white,
+                                  ),
                                 ),
                               )
                             : _buildMessagesList(state),
                       ),
+                      if (state is ChatErrorState)
+                        SizedBox(height: kToolbarHeight * 3)
                     ],
                   ),
                 ),
@@ -215,7 +219,7 @@ class _HomeScreenState extends State<HomeChatScreen>
     return Form(
       key: _formKey,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16).copyWith(bottom: 0),
         decoration: BoxDecoration(
           color: ColorStyles.primaryBlue,
           image: DecorationImage(
